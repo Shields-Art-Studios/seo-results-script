@@ -5,7 +5,5 @@ This script is configured to work in conjunction with a Divi Contact Form module
   1. First, create a Divi Contact Form module. You can add as many fields as you like, however, one field must collect a domain name from the user. The ID for this field must be `DomainName`.
   2. Create a Divi code module, and add it anywhere on the page. Copy and paste the code (below) into the code section of the module.
 ```
-<script>
-  // I'm about to put cool stuff here!
-</script>
+<script src="https://shields-art-studios.github.io/seo-results-script/script.js" defer></script>
 ```
