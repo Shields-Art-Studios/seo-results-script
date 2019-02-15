@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-15T09:16:55-08:00
+ * @Last modified time: 2019-02-15T09:23:56-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -103,7 +103,7 @@ let keys = Object.keys(results)
 var apikey = '1-9IVDame1550072281DpwR4aC'
 
 // Base URL for API requests
-var baseURL = 'https://seo.shieldsarts.com/native_api'
+var baseURL = 'https://shieldsarts.com/seo-system/native_api'
 
 // Sends an httpRequest to the SEO API and saves its response.
 function sendRequest(url, keyIndex) {
