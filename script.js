@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-15T09:02:28-08:00
+ * @Last modified time: 2019-02-15T09:07:11-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -123,30 +123,32 @@ function sendRequest(url, keyIndex) {
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
 
-// Retrieve all elements with the SEOForm class and select the first one
-var form = document.getElementsByClassName('SEOForm')[0]
-console.log(form)
-console.log(form.querySelector('button'))
+// Retrieve all elements with the SEOForm class
+var forms = document.getElementsByClassName('SEOForm')[0]
 
-// Select the submit button and add a click event listener.
-form.querySelector('button').addEventListener('click', (event) => {
-  console.log('click!')
-  // Select the input elements
-  let inputs = document.getElementsByTagName('input')
-  let website = null
+// Select the submit buttons and adda click event listeners.
+forms.forEach(form => {
+  console.log(form)
+  console.log(form.querySelector('button'))
+  form.querySelector('button').addEventListener('click', (event) => {
+    console.log('click!')
+    // Select the input elements
+    let inputs = document.getElementsByTagName('input')
+    let website = null
 
-  // Find the website input using (unfortunately) its only unique attribute: it's placeholder text.
-  // Save its value
-  for (let input of inputs) {
-    if (input.getAttribute('placeholder') === 'Website') website = input.value
-  }
+    // Find the website input using (unfortunately) its only unique attribute: it's placeholder text.
+    // Save its value
+    for (let input of inputs) {
+      if (input.getAttribute('placeholder') === 'Website') website = input.value
+    }
 
-  // Confirm that the user has not previously sent a request
-  if (!haveSentRequest) {
-    // Iterate over each request type
-    keys.forEach((key, index) => {
-      // Fire an API request asynchronously.
-      sendRequest(website, index)
-    })
-  }
+    // Confirm that the user has not previously sent a request
+    if (!haveSentRequest) {
+      // Iterate over each request type
+      keys.forEach((key, index) => {
+        // Fire an API request asynchronously.
+        sendRequest(website, index)
+      })
+    }
+  })
 })
