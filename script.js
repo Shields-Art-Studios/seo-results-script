@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-13T14:45:53-08:00
+ * @Last modified time: 2019-02-15T09:02:28-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -111,7 +111,7 @@ function sendRequest(url, keyIndex) {
   http.onreadystatechange = function() {
     if (http.readyState === 4 && http.status == 200) {
       // Request was successful!
-      // Dereference the key index and ave the API response
+      // Dereference the key index and save the API response
       results[keys[keyIndex]].result = JSON.parse(http.responseText)
       console.log(results)
     }
@@ -125,9 +125,12 @@ var haveSentRequest = false // Set to true when the user requests for SEO result
 
 // Retrieve all elements with the SEOForm class and select the first one
 var form = document.getElementsByClassName('SEOForm')[0]
+console.log(form)
+console.log(form.querySelector('button'))
 
 // Select the submit button and add a click event listener.
 form.querySelector('button').addEventListener('click', (event) => {
+  console.log('click!')
   // Select the input elements
   let inputs = document.getElementsByTagName('input')
   let website = null
