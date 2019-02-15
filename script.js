@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-15T09:23:56-08:00
+ * @Last modified time: 2019-02-15T09:28:28-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -100,10 +100,10 @@ var results = {
 let keys = Object.keys(results)
 
 // This is super insecure, but a new API key can be regenerated if this one is compromised.
-var apikey = '1-9IVDame1550072281DpwR4aC'
+var apikey = '1-O9YeHfU15502387623kKWZdc' //'1-9IVDame1550072281DpwR4aC'
 
 // Base URL for API requests
-var baseURL = 'https://shieldsarts.com/seo-system/native_api'
+var baseURL = 'http://sitespy.xeroneit.net/native_api/' //'https://shieldsarts.com/seo-system/native_api'
 
 // Sends an httpRequest to the SEO API and saves its response.
 function sendRequest(url, keyIndex) {
