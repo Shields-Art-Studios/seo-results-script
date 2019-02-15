@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-15T09:07:11-08:00
+ * @Last modified time: 2019-02-15T09:09:55-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -124,7 +124,7 @@ function sendRequest(url, keyIndex) {
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
 
 // Retrieve all elements with the SEOForm class
-var forms = document.getElementsByClassName('SEOForm')[0]
+var forms = document.getElementsByClassName('SEOForm')
 
 // Select the submit buttons and adda click event listeners.
 forms.forEach(form => {
