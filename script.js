@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:04:16-08:00
+ * @Last modified time: 2019-02-19T13:08:46-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -201,6 +201,15 @@ function renderResults() {
       results: [
         { desc: 'Category Rank', res: results['similarWeb']['result']['category_rank'] },
         { desc: 'Global Rank', res: results['similarWeb']['result']['global'] }
+      ]
+    },
+    {
+      title: 'Security',
+      results: [
+        { desc: 'McAfee Malware Check', res: results['mcafeeMalware']['result'] },
+        { desc: 'Google Safe Browser Check', res: results['googleSafeBrowser']['result'] },
+        { desc: 'AVG Malware Check', res: results['avgMalware']['result'] },
+        { desc: 'Norton Malware', res: results['nortonMalware']['result'] }
       ]
     },
     {
