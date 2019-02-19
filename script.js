@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:08:46-08:00
+ * @Last modified time: 2019-02-19T13:16:19-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -230,6 +230,7 @@ function renderResults() {
     {
       title: 'Search',
       results: [
+        { desc: 'Google Index', res: results['yahooIndex']['result'] },
         { desc: 'Yahoo Index', res: results['yahooIndex']['result'] },
         { desc: 'Bing Index', res: results['bingIndex']['result'] }
       ]
@@ -247,8 +248,8 @@ function renderResults() {
     {
       title: 'Promotion',
       results: [
-        { desc: '', res: '' }
-      ]
+        { desc: 'External Link Count', res: results['linkAnalysis']['result']['external_link_count'] },
+        { desc: 'Internal Link Count', res: results['linkAnalysis']['result']['internal_link_count'] },
     },
     {
       title: 'Voice Assistants',
