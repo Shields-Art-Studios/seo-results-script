@@ -4,93 +4,114 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-18T23:08:57-08:00
+ * @Last modified time: 2019-02-18T23:19:39-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
 // Create empty object for storing results
 var results = {
   facebook: {
+    name: 'Facebook Likes:',
     url: '/dmoz_check',
     result: null
   },
   googlePlus: {
+    name: 'Google Plus Likes:',
     url: '/google_plus_check', // API documentation has a typo. This is correct.
     result: null
   },
   linkedIn: {
+    name: 'LinkedIn Shares:',
     url: '/linkedin_check',
     result: null
   },
   xing: {
+    name: 'Xing Shares:',
     url: '/xing_check',
     result: null
   },
   reddit: {
+    name: 'Reddit Posts:',
     url: '/reddit_check',
     result: null
   },
   pinterest: {
+    name: 'Pinterest Shares:',
     url: '/pinterest_check',
     result: null
   },
   buffer: {
+    name: 'Buffer Shares:',
     url: '/buffer_check',
     result: null
   },
   stumbleupon: {
+    name: 'StumbleUpon shares:',
     url: '/stumbleupon_check',
     result: null
   },
   pageStatus: {
+    name: 'Page Status:',
     url: '/pagestatus_check',
     result: null
   },
   alexa: {
+    name: 'Alexa Compatibility:',
     url: '/alexa_check',
     result: null
   },
   similarWeb: {
+    name: 'SimilarWeb Check:',
     url: '/similar_web_check',
     result: null
   },
   bingIndex: {
+    name: 'Bing Index:',
     url: '/bing_index_check',
     result: null
   },
   yahooIndex: {
+    name: 'Yahoo Index:',
     url: '/yahoo_index_check',
     result: null
   },
   linkAnalysis: {
+    name: 'Link Analysis:',
     url: '/link_analysis_check',
     result: null
   },
   backlink: {
+    name: 'Backlink Analysis:',
     url: '/backlink_check',
     result: null
   },
   googleSafeBrowser: {
+    name: 'Google Safe Browser Check:',
     url: '/google_malware_check',
     result: null
   },
   mcafeeMalware: {
+    name: 'McAfee Malware Check:',
     url: '/mcafee_malware_check',
     result: null
   },
   avgMalware: {
+    name: 'AVG Malware Check:',
     url: '/avg_malware_check',
     result: null
   },
   nortonMalware: {
+    name: 'Norton Malware Check:',
     url: '/norton_malware_check',
     result: null
   },
   domainIP: {
+    name: 'IP Check:',
     url: '/domain_ip_check',
     result: null
   },
   sitesInSameIP: {
+    name: 'Websites in the Same IP:',
     url: '/sites_in_same_ip_check',
     result: null
   }
@@ -113,6 +134,9 @@ function sendRequest(url, keyIndex) {
   let http = new XMLHttpRequest()
   http.onreadystatechange = function() {
     if (http.readyState === 4) {
+      if (http.status !== 200) {
+        results[keys[keyIndex]].error = http.responseText
+      }
       // Add one to Progress
       progress++
 
@@ -124,6 +148,15 @@ function sendRequest(url, keyIndex) {
   // Build the request URL and send it!
   http.open('GET', baseURL + results[keys[keyIndex]].url + '?api_key=' + apikey + '&domain=' + encodeURI(url))
   http.send()
+}
+
+// Once results are downloaded, render them on screen
+function renderResults() {
+  let targetDiv = document.getElementById('resultsDiv')
+  targetDiv.innerHTML = ''
+  Object.values(results).forEach(v => {
+    targetDiv.innerHTML += '<br /><b>' + v.name + '</b> ' + JSON.stringify(v.result)
+  })
 }
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
@@ -156,6 +189,7 @@ document.getElementById('submit').addEventListener('click', function() {
       if (progress/21 === 1) {
         clearInterval(progressInterval)
         document.getElementById('results').classList.remove('is-active')
+        renderResults()
       }
     }, 1000)
   }
