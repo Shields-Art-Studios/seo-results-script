@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T11:42:12-08:00
+ * @Last modified time: 2019-02-19T12:44:35-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -12,7 +12,7 @@
 var results = {
   facebook: {
     name: 'Facebook Likes:',
-    url: '/dmoz_check',
+    url: '/facebook_check',
     result: null
   },
   googlePlus: {
@@ -194,11 +194,9 @@ function renderResults() {
     {
       title: 'Ranking',
       results: [
-        { desc: 'Category Rank', res: '' },
-        { desc: 'Global Rank', res: '' },
-        { desc: 'Top Country Rank', res: '' },
-        { desc: 'Total Visit', res: '' },
-        { desc: 'Time on Site', res: '' },
+        { desc: 'Category Rank', res: results['similarWeb']['result']['category_rank'] },
+        { desc: 'Global Rank', res: results['similarWeb']['result']['global'] },
+        { desc: '', res: '' },
         { desc: '', res: '' },
         { desc: '', res: '' },
         { desc: '', res: '' },
@@ -209,13 +207,23 @@ function renderResults() {
     {
       title: 'Traffic',
       results: [
-        { desc: '', res: '' }
+        { desc: 'Total Visit', res: results['similarWeb']['result']['total_visit'] },
+        { desc: 'Time on Site', res: results['similarWeb']['result']['time_on_site'] },
+        { desc: 'Page Views', res: results['similarWeb']['result']['page_views'] },
+        { desc: 'Bounce', res: results['similarWeb']['result']['bounce'] },
+        { desc: 'Direct Traffic', res: results['similarWeb']['result']['direct_traffic'] },
+        { desc: 'Search Traffic', res: results['similarWeb']['result']['search_traffic'] },
+        { desc: 'Social Traffic', res: results['similarWeb']['result']['social_traffic'] },
+        { desc: 'Mail Traffic', res: results['similarWeb']['result']['mail_traffic'] },
+        { desc: 'Organic Search Percentage', res: results['similarWeb']['result']['organic_search_percentage'] },
+        { desc: 'Paid Search Percentage', res: results['similarWeb']['result']['paid_search_percentage'] }
       ]
     },
     {
       title: 'Search',
       results: [
-        { desc: '', res: '' }
+        { desc: 'Yahoo Index', res: results['yahooIndex']['result'] },
+        { desc: 'Bing Index', res: results['bingIndex']['result'] }
       ]
     },
     {
@@ -232,12 +240,6 @@ function renderResults() {
     },
     {
       title: 'Voice Assistants',
-      results: [
-        { desc: '', res: '' }
-      ]
-    },
-    {
-      title: 'Domain Analysis',
       results: [
         { desc: '', res: '' }
       ]
