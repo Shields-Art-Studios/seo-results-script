@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T12:50:19-08:00
+ * @Last modified time: 2019-02-19T12:54:48-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -200,13 +200,7 @@ function renderResults() {
       title: 'Ranking',
       results: [
         { desc: 'Category Rank', res: results['similarWeb']['result']['category_rank'] },
-        { desc: 'Global Rank', res: results['similarWeb']['result']['global'] },
-        { desc: '', res: '' },
-        { desc: '', res: '' },
-        { desc: '', res: '' },
-        { desc: '', res: '' },
-        { desc: '', res: '' },
-        { desc: '', res: '' },
+        { desc: 'Global Rank', res: results['similarWeb']['result']['global'] }
       ]
     },
     {
@@ -234,7 +228,11 @@ function renderResults() {
     {
       title: 'Optimization',
       results: [
-        { desc: '', res: '' }
+        { desc: 'HTTP Request Status', res: results['pageStatus']['result']['http_code'] },
+        { desc: 'Time', res: results['pageStatus']['result']['total_time'] },
+        { desc: 'Domain Name Lookup Time', res: results['pageStatus']['result']['namelookup_time'] },
+        { desc: 'Time to Connect', res: results['pageStatus']['result']['connect_time'] },
+        { desc: 'Download Speed', res: results['pageStatus']['result']['speed_download'] }
       ]
     },
     {
