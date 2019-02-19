@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-18T23:00:53-08:00
+ * @Last modified time: 2019-02-18T23:04:17-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -150,8 +150,8 @@ document.getElementById('submit').addEventListener('click', function() {
 
     // Begin to update the progress bar
     setInterval(function() {
-      console.log(progress/21) // for debugging
-      document.getElementById('progressBar').setAttribute('value', progress / 21)
+      console.log(progress/21 * 100) // for debugging
+      document.getElementById('progressBar').setAttribute('value', progress / 21 * 100)
     }, 1000)
   }
 })
