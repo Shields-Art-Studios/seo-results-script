@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T11:07:46-08:00
+ * @Last modified time: 2019-02-19T11:11:45-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -263,7 +263,7 @@ document.getElementById('submit').addEventListener('click', function() {
       console.log(progress/21 * 100) // for debugging
       document.getElementById('progressBar').setAttribute('value', progress / 21 * 100)
 
-      if (progress/21 >== 1) {
+      if (progress/21 >= 1) {
         clearInterval(progressInterval)
         renderResults()
         document.getElementById('results').classList.remove('is-active')
