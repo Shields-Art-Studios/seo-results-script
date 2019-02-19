@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:32:45-08:00
+ * @Last modified time: 2019-02-19T13:42:08-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -92,7 +92,7 @@ var results = {
   },
   mcafeeMalware: {
     name: 'McAfee Malware Check:',
-    url: '/mcafee_malware_check',
+    url: '/macafee_malware_check',
     result: null
   },
   avgMalware: {
@@ -242,7 +242,7 @@ function renderResults() {
         { desc: 'Time', res: results['pageStatus']['result']['total_time'] + 's' },
         { desc: 'Domain Name Lookup Time', res: results['pageStatus']['result']['namelookup_time'] + 's' },
         { desc: 'Time to Connect', res: results['pageStatus']['result']['connect_time'] + 's' },
-        { desc: 'Download Speed', res: results['pageStatus']['result']['speed_download'] / 1000 + 'Kb/s' }
+        { desc: 'Download Speed', res: results['pageStatus']['result']['speed_download'] / 1000 + ' Kb/s' }
       ]
     },
     {
@@ -258,7 +258,7 @@ function renderResults() {
         { desc: 'Reddit Upvotes', res: results['reddit']['result']['ups'] },
         { desc: 'Reddit Downvotes', res: results['reddit']['result']['downs'] },
         { desc: 'Reddit Score', res: results['reddit']['result']['score'] },
-        { desc: 'Pinterest Pins', res: results['pinterest']['result']['pins'] }
+        { desc: 'Pinterest Pins', res: results['pinterest']['result']['pinterest_pin'] }
       ]
     },
     {
