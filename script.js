@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:30:31-08:00
+ * @Last modified time: 2019-02-19T13:32:45-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -259,6 +259,7 @@ function renderResults() {
         { desc: 'Reddit Downvotes', res: results['reddit']['result']['downs'] },
         { desc: 'Reddit Score', res: results['reddit']['result']['score'] },
         { desc: 'Pinterest Pins', res: results['pinterest']['result']['pins'] }
+      ]
     },
     {
       title: 'Voice Assistants',
