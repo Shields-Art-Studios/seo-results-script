@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-18T09:51:34-08:00
+ * @Last modified time: 2019-02-18T23:00:53-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -96,6 +96,9 @@ var results = {
   }
 }
 
+// Progress bar status
+var progress = 0
+
 // Create an array of the keys in the results object for iteration (in API requests)
 let keys = Object.keys(results)
 
@@ -109,11 +112,13 @@ var baseURL = 'https://shieldsarts.com/seo-system/native_api'
 function sendRequest(url, keyIndex) {
   let http = new XMLHttpRequest()
   http.onreadystatechange = function() {
-    if (http.readyState === 4 && http.status == 200) {
+    if (http.readyState === 4) {
+      // Add one to Progress
+      progress++
+
       // Request was successful!
       // Dereference the key index and save the API response
       results[keys[keyIndex]].result = JSON.parse(http.responseText)
-      console.log(results)
     }
   }
   // Build the request URL and send it!
@@ -123,32 +128,30 @@ function sendRequest(url, keyIndex) {
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
 
-// Retrieve all elements with the SEOForm class
-var forms = document.getElementsByClassName('SEOForm')
+document.getElementById('submit').addEventListener('click', function() {
+  // Only send one request per visit
+  if (!haveSentRequest) {
+    // Retrieve input from user
+    let url = encodeURI(document.getElementById('domainName').value)
+    let name = encodeURI(document.getElementById('name').value)
+    let email = encodeURI(document.getElementById('email').value)
+    let phone = encodeURI(document.getElementById('phone').value)
+    let usr = { url, name, email, phone }
+    console.log(usr) // For debugging
 
-// Select the submit buttons and adda click event listeners.
-for (let form of forms) {
-  console.log(form)
-  console.log(form.querySelector('button'))
-  form.querySelector('button').addEventListener('click', (event) => {
-    console.log('click!')
-    // Select the input elements
-    let inputs = document.getElementsByTagName('input')
-    let website = null
+    // Open the results modal
+    document.getElementById('results').classList.add('is-active')
 
-    // Find the website input using (unfortunately) its only unique attribute: it's placeholder text.
-    // Save its value
-    for (let input of inputs) {
-      if (input.getAttribute('placeholder') === 'Website') website = input.value
-    }
+    // Iterate through each API call
+    keys.forEach((key, index) => {
+      // Fire an API request
+      sendRequest(url, index)
+    })
 
-    // Confirm that the user has not previously sent a request
-    if (!haveSentRequest) {
-      // Iterate over each request type
-      keys.forEach((key, index) => {
-        // Fire an API request asynchronously.
-        sendRequest(website, index)
-      })
-    }
-  })
-}
+    // Begin to update the progress bar
+    setInterval(function() {
+      console.log(progress/21) // for debugging
+      document.getElementById('progressBar').setAttribute('value', progress / 21)
+    }, 1000)
+  }
+})
