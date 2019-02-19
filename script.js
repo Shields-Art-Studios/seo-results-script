@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-18T23:19:39-08:00
+ * @Last modified time: 2019-02-19T11:07:46-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -143,6 +143,7 @@ function sendRequest(url, keyIndex) {
       // Request was successful!
       // Dereference the key index and save the API response
       results[keys[keyIndex]].result = JSON.parse(http.responseText)
+      console.log(JSON.parse(http.responseText))
     }
   }
   // Build the request URL and send it!
@@ -150,13 +151,87 @@ function sendRequest(url, keyIndex) {
   http.send()
 }
 
-// Once results are downloaded, render them on screen
-function renderResults() {
-  let targetDiv = document.getElementById('resultsDiv')
-  targetDiv.innerHTML = ''
-  Object.values(results).forEach(v => {
-    targetDiv.innerHTML += '<br /><b>' + v.name + '</b> ' + JSON.stringify(v.result)
+// Formats one results category and renders it
+function formatResults(categoryObject) {
+  // Render category title
+  let html = '<div class="et_pb_column et_pb_column_4_4 et_pb_column_8 et_pb_css_mix_blend_mode_passthrough et-last-child"><div class="et_pb_module et_pb_text et_pb_text_2 et_pb_bg_layout_light et_pb_text_align_left"><div class="et_pb_text_inner">'
+  html += '<p>' + categoryObject.title + '</p>'
+  html += '</div></div></div>'
+
+  // Render results
+  html += '<div class="content is-medium">'
+  categoryObject.results.forEach(r => {
+    html += '<p>' + r.desc + ': ' + r.res + '</p>'
   })
+  html += '</div>'
+
+  // Render the generated html
+  render(html)
+}
+
+// Clears the results div
+var targetDiv = document.getElementById('resultsDiv')
+targetDiv.innerHTML = ''
+
+// Renders the supplied html.
+function render(html) { targetDiv.innerHTML += html }
+
+// Formats the categories into js objects and renders each one
+function renderResults() {
+  let categories = [
+    {
+      title: 'General Information', // Whois, IP, DNS, Server
+      results: [
+        { desc: 'ISP', res: results['domainIP']['result']['isp'] },
+        { desc: 'IP', res: results['domainIP']['result']['ip'] },
+        { desc: 'Organization', res: results['domainIP']['result']['organization'] },
+        { desc: 'City', res: results['domainIP']['result']['city'] },
+        { desc: 'Time Zone', res: results['domainIP']['result']['time_zone'] },
+      ]
+    },
+    {
+      title: 'Ranking',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Traffic',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Search',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Optimization',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Promotion',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Voice Assistants',
+      results: [
+        { desc: '', res: '' }
+      ]
+    },
+    {
+      title: 'Domain Analysis',
+      results: [
+        { desc: '', res: '' }
+      ]
+    }
+  ]
 }
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
@@ -176,9 +251,11 @@ document.getElementById('submit').addEventListener('click', function() {
     document.getElementById('results').classList.add('is-active')
 
     // Iterate through each API call
+    let time = 0 // Space each request by 50ms.
     keys.forEach((key, index) => {
       // Fire an API request
-      sendRequest(url, index)
+      setTimeout(sendRequest(url, index), time)
+      time += 50
     })
 
     // Begin to update the progress bar
@@ -186,10 +263,10 @@ document.getElementById('submit').addEventListener('click', function() {
       console.log(progress/21 * 100) // for debugging
       document.getElementById('progressBar').setAttribute('value', progress / 21 * 100)
 
-      if (progress/21 === 1) {
+      if (progress/21 >== 1) {
         clearInterval(progressInterval)
-        document.getElementById('results').classList.remove('is-active')
         renderResults()
+        document.getElementById('results').classList.remove('is-active')
       }
     }, 1000)
   }
