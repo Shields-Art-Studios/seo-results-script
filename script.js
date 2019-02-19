@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T12:44:35-08:00
+ * @Last modified time: 2019-02-19T12:50:19-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -142,8 +142,13 @@ function sendRequest(url, keyIndex) {
 
       // Request was successful!
       // Dereference the key index and save the API response
-      results[keys[keyIndex]].result = JSON.parse(http.responseText)
-      console.log(JSON.parse(http.responseText))
+      try {
+        results[keys[keyIndex]].result = JSON.parse(http.responseText)
+        console.log(JSON.parse(http.responseText))
+      } catch(err) {
+        results[keys[keyIndex]].result = http.responseText
+        console.log(http.responseText)
+      }
     }
   }
   // Build the request URL and send it!
@@ -271,7 +276,7 @@ document.getElementById('submit').addEventListener('click', function() {
     // Iterate through each API call
     keys.forEach((key, index) => {
       // Fire an API request
-      setTimeout(sendRequest(url, index), 100 * index) // Requests fire at 0ms, 100ms, 200ms, etc
+      setTimeout(sendRequest(url, index), 300 * index) // Requests fire at 0ms, 100ms, 200ms, etc
     })
 
     // Begin to update the progress bar
