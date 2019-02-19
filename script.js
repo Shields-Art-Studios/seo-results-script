@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T11:36:28-08:00
+ * @Last modified time: 2019-02-19T11:42:12-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -154,9 +154,9 @@ function sendRequest(url, keyIndex) {
 // Formats one results category and renders it
 function formatResults(categoryObject) {
   // Render category title
-  let html = '<div class="et_pb_column et_pb_column_4_4 et_pb_column_8 et_pb_css_mix_blend_mode_passthrough et-last-child"><div class="et_pb_module et_pb_text et_pb_text_2 et_pb_bg_layout_light et_pb_text_align_left"><div class="et_pb_text_inner">'
+  let html = '<div class="resultsHeader">'
   html += '<p>' + categoryObject.title + '</p>'
-  html += '</div></div></div>'
+  html += '</div>'
 
   // Render results
   html += '<div class="content is-medium">'
