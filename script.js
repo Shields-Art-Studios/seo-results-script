@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:16:19-08:00
+ * @Last modified time: 2019-02-19T13:30:31-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -242,7 +242,7 @@ function renderResults() {
         { desc: 'Time', res: results['pageStatus']['result']['total_time'] + 's' },
         { desc: 'Domain Name Lookup Time', res: results['pageStatus']['result']['namelookup_time'] + 's' },
         { desc: 'Time to Connect', res: results['pageStatus']['result']['connect_time'] + 's' },
-        { desc: 'Download Speed', res: results['pageStatus']['result']['speed_download'] }
+        { desc: 'Download Speed', res: results['pageStatus']['result']['speed_download'] / 1000 + 'Kb/s' }
       ]
     },
     {
@@ -250,6 +250,15 @@ function renderResults() {
       results: [
         { desc: 'External Link Count', res: results['linkAnalysis']['result']['external_link_count'] },
         { desc: 'Internal Link Count', res: results['linkAnalysis']['result']['internal_link_count'] },
+        { desc: 'Backlink Count', res: results['backlink']['result'] },
+        { desc: 'Facebook Likes', res: results['facebook']['result']['total_like'] },
+        { desc: 'Facebook Shares', res: results['facebook']['result']['total_share'] },
+        { desc: 'Google+ Likes', res: results['googlePlus']['result']['google_plus_count'] },
+        { desc: 'Linkedin Shares', res: results['linkedIn']['result']['total_share'] },
+        { desc: 'Reddit Upvotes', res: results['reddit']['result']['ups'] },
+        { desc: 'Reddit Downvotes', res: results['reddit']['result']['downs'] },
+        { desc: 'Reddit Score', res: results['reddit']['result']['score'] },
+        { desc: 'Pinterest Pins', res: results['pinterest']['result']['pins'] }
     },
     {
       title: 'Voice Assistants',
