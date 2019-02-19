@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T11:11:45-08:00
+ * @Last modified time: 2019-02-19T11:36:28-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -178,6 +178,8 @@ function render(html) { targetDiv.innerHTML += html }
 
 // Formats the categories into js objects and renders each one
 function renderResults() {
+
+  // Format results object
   let categories = [
     {
       title: 'General Information', // Whois, IP, DNS, Server
@@ -192,7 +194,16 @@ function renderResults() {
     {
       title: 'Ranking',
       results: [
-        { desc: '', res: '' }
+        { desc: 'Category Rank', res: '' },
+        { desc: 'Global Rank', res: '' },
+        { desc: 'Top Country Rank', res: '' },
+        { desc: 'Total Visit', res: '' },
+        { desc: 'Time on Site', res: '' },
+        { desc: '', res: '' },
+        { desc: '', res: '' },
+        { desc: '', res: '' },
+        { desc: '', res: '' },
+        { desc: '', res: '' },
       ]
     },
     {
@@ -232,6 +243,11 @@ function renderResults() {
       ]
     }
   ]
+
+  // Render each category
+  categories.forEach(c => {
+    formatResults(c)
+  })
 }
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
@@ -251,11 +267,9 @@ document.getElementById('submit').addEventListener('click', function() {
     document.getElementById('results').classList.add('is-active')
 
     // Iterate through each API call
-    let time = 0 // Space each request by 50ms.
     keys.forEach((key, index) => {
       // Fire an API request
-      setTimeout(sendRequest(url, index), time)
-      time += 50
+      setTimeout(sendRequest(url, index), 100 * index) // Requests fire at 0ms, 100ms, 200ms, etc
     })
 
     // Begin to update the progress bar
