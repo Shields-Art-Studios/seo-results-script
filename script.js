@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-02-19T13:42:08-08:00
+ * @Last modified time: 2019-03-04T07:39:30-08:00
  * @Copyright 2019 Shields Art Studios
  */
 
@@ -260,12 +260,6 @@ function renderResults() {
         { desc: 'Reddit Score', res: results['reddit']['result']['score'] },
         { desc: 'Pinterest Pins', res: results['pinterest']['result']['pinterest_pin'] }
       ]
-    },
-    {
-      title: 'Voice Assistants',
-      results: [
-        { desc: '', res: '' }
-      ]
     }
   ]
 
@@ -277,36 +271,22 @@ function renderResults() {
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
 
+// Add http:// to domainname by default.
+document.getElementById('domainName').value = 'http://'
+
+// Download the target web page and perform analysis
 document.getElementById('submit').addEventListener('click', function() {
-  // Only send one request per visit
-  if (!haveSentRequest) {
-    // Retrieve input from user
-    let url = encodeURI(document.getElementById('domainName').value)
-    let name = encodeURI(document.getElementById('name').value)
-    let email = encodeURI(document.getElementById('email').value)
-    let phone = encodeURI(document.getElementById('phone').value)
-    let usr = { url, name, email, phone }
-    console.log(usr) // For debugging
+  // Download the target web page
+  let url = encodeURI(document.getElementById('domainName').value)
+  let http = new XMLHttpRequest()
+  http.onreadystatechange = function() {
+    let page = document.createElement("div")
+    page.innerHTML = http.responseText
+    console.log(http.responseText)
+    // Perform analysis
 
-    // Open the results modal
-    document.getElementById('results').classList.add('is-active')
-
-    // Iterate through each API call
-    keys.forEach((key, index) => {
-      // Fire an API request
-      setTimeout(sendRequest(url, index), 300 * index) // Requests fire at 0ms, 100ms, 200ms, etc
-    })
-
-    // Begin to update the progress bar
-    var progressInterval = setInterval(function() {
-      console.log(progress/21 * 100) // for debugging
-      document.getElementById('progressBar').setAttribute('value', progress / 21 * 100)
-
-      if (progress/21 >= 1) {
-        clearInterval(progressInterval)
-        renderResults()
-        document.getElementById('results').classList.remove('is-active')
-      }
-    }, 1000)
   }
+  // Build the request URL and send it!
+  http.open('GET', url)
+  http.send()
 })
