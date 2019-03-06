@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T14:38:33-08:00
+ * @Last modified time: 2019-03-06T14:41:17-08:00
  */
 
  // Add microformat parser to page
@@ -236,7 +236,7 @@ function analyze(html) {
           }
         }
       }
-      http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+url)
+      http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
       http.send()
     },
     googlePreviewSnippet: (page) => {
@@ -254,7 +254,7 @@ function analyze(html) {
              }
           }
       };
-      http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+url+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
+      http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
       http.send()
     },
     socialMediaLikes: (page) => {
@@ -271,7 +271,7 @@ function analyze(html) {
             }
           }
       }
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+url, true)
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
       http.send()
     },
     schema: (page) => {
