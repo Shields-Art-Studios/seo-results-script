@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T09:12:11-08:00
+ * @Last modified time: 2019-03-06T09:13:13-08:00
  */
 
  // Add microformat parser to page
@@ -199,7 +199,10 @@ function analyze(html) {
       }
     },
     xmlSitemap: (page) => {
-      // /sitemap.xml
+      return {
+        title: 'Sitemap Check',
+        result: 'Untested'
+      }
     },
     openGraph: (page) => {
       return {
