@@ -4,12 +4,17 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T08:50:05-08:00
+ * @Last modified time: 2019-03-06T09:11:07-08:00
  */
 
  // Add microformat parser to page
  let s = document.createElement('script')
  s.src = 'https://shields-art-studios.github.io/seo-results-script/microformat-shiv.min.js'
+ document.head.appendChild(s)
+
+ // Add openGraph parser to page
+ let s = document.createElement('script')
+ s.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
  document.head.appendChild(s)
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
@@ -194,19 +199,42 @@ function analyze(html) {
       }
     },
     xmlSitemap: (page) => {
-
+      // /sitemap.xml
     },
     openGraph: (page) => {
-
+      return {
+        title: 'OpenGraph Check',
+        result: getInfo(page) // in opengraph.js
+      }
     },
     viewport: (page) => {
-
+      let result = false
+      for (el of document.getElementsByTagName('meta')) {
+        if (el.getAttribute('name') == 'viewport') result = true
+      }
+      return {
+        title: 'Has Viewport Tag',
+        result: result
+      }
     },
     favicon: (page) => {
-
+      return {
+        title: 'Has Favicon',
+        result: 'Untested'
+      }
     },
     speed: (page) => {
-
+      let http = new XMLHTTPRequest()
+      http.onreadystatechange = function() {
+        if (this.readystate == 4 && this.status == 200) {
+          return {
+            title: 'Speed Test',
+            result: JSON.parse(http.responseText)
+          }
+        }
+      }
+      http.open('GET', 'http://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+url)
+      http.send()
     },
     googlePreviewSnippet: (page) => {
 
@@ -250,7 +278,7 @@ function analyze(html) {
       }
       return {
         title: 'Website Schema Check',
-        result: Microformats.get(options)
+        result: Microformats.get(options) // in microformat-shiv.min.js
       }
     }
   }
