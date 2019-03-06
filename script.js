@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T09:11:07-08:00
+ * @Last modified time: 2019-03-06T09:12:11-08:00
  */
 
  // Add microformat parser to page
@@ -13,9 +13,9 @@
  document.head.appendChild(s)
 
  // Add openGraph parser to page
- let s = document.createElement('script')
- s.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
- document.head.appendChild(s)
+ let s2 = document.createElement('script')
+ s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
+ document.head.appendChild(s2)
 
 var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
 
