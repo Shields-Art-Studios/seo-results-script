@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T14:36:24-08:00
+ * @Last modified time: 2019-03-06T14:38:33-08:00
  */
 
  // Add microformat parser to page
@@ -227,7 +227,7 @@ function analyze(html) {
       }
     },
     speed: (page) => {
-      let http = new XMLHTTPRequest()
+      let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
           return {
@@ -244,7 +244,7 @@ function analyze(html) {
     },
     whois: (page) => {
       // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
-      let http = new XMLHTTPRequest()
+      let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
@@ -258,7 +258,7 @@ function analyze(html) {
       http.send()
     },
     socialMediaLikes: (page) => {
-      let http = new XMLHTTPRequest()
+      let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(http.responseText)
