@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T14:26:56-08:00
+ * @Last modified time: 2019-03-06T14:36:24-08:00
  */
 
  // Add microformat parser to page
@@ -207,7 +207,7 @@ function analyze(html) {
     openGraph: (page) => {
       return {
         title: 'OpenGraph Check',
-        result: getInfo(page) // in opengraph.js
+        result: grabInfo(page) // in opengraph.js
       }
     },
     viewport: (page) => {
