@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T09:13:13-08:00
+ * @Last modified time: 2019-03-06T14:26:56-08:00
  */
 
  // Add microformat parser to page
@@ -162,7 +162,7 @@ function analyze(html) {
           result += h.textContent + ','
         }
       } else {
-        result.result = 'Failed.'
+        result.result = 'Didn\'t pass.'
       }
 
       return {
@@ -180,7 +180,7 @@ function analyze(html) {
       let images = page.getElementsByTagName('img')
       let result = 'Passed!'
       for (i of images) {
-        if (i.getAttribute('alt').length === 0) result = 'Failed!'
+        if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
       }
       return {
         title: 'Alt Tags Check',
@@ -194,7 +194,7 @@ function analyze(html) {
         if (parseURL(link.getAttribute('href')).host = host) num++
       }
       return {
-        title: 'Links Within Domain Name',
+        title: 'Number of Links Within Domain Name',
         result: num
       }
     },
@@ -223,7 +223,7 @@ function analyze(html) {
     favicon: (page) => {
       return {
         title: 'Has Favicon',
-        result: 'Untested'
+        result: 'Untested' // Low priority
       }
     },
     speed: (page) => {
@@ -236,7 +236,7 @@ function analyze(html) {
           }
         }
       }
-      http.open('GET', 'http://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+url)
+      http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+url)
       http.send()
     },
     googlePreviewSnippet: (page) => {
@@ -283,10 +283,16 @@ function analyze(html) {
         title: 'Website Schema Check',
         result: Microformats.get(options) // in microformat-shiv.min.js
       }
+    },
+    funTest: (page) => {
+      return {
+        title: 'Fun Test',
+        result: 'Looks pretty fun.'
+      }
     }
   }
 
-  html =  html.replace(/\&[\w\d\#]{2,5}\;/g, (m) => map[m])
+  html = html.replace(/\&[\w\d\#]{2,5}\;/g, (m) => map[m])
   let page = document.createElement('div')
   page.innerHTML = html
   console.log(page)
@@ -307,6 +313,6 @@ document.getElementById('submit').addEventListener('click', function() {
   // Build the request URL and send it!
   // Execute JSONP request
   let s = document.createElement('script')
-  s.src = 'http://jackrwoods.hostingmyself.com/getRequestGenerator.php?url='+url+'&callback=analyze'
+  s.src = 'https://jackrwoods.hostingmyself.com/getRequestGenerator.php?url='+url+'&callback=analyze'
   document.head.appendChild(s)
 })
