@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:16:48-07:00
+ * @Last modified time: 2019-03-11T13:21:55-07:00
  */
 
  // Add microformat parser to page
@@ -325,9 +325,7 @@ function analyze(html) {
   console.log(page)
 
   // Perform analysis and render each result
-  Object.keys(tests).forEach(k => {
-    console.log(tests[k](page).result)
-  })
+  setTimeout(console.log(tests), 5000)
 }
 
 // Add http:// to domainname by default.
