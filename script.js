@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:03:00-07:00
+ * @Last modified time: 2019-03-11T13:14:19-07:00
  */
 
  // Add microformat parser to page
@@ -246,7 +246,10 @@ function analyze(html) {
       })
     },
     googlePreviewSnippet: (page) => {
-
+      return {
+        title: 'Has Favicon',
+        result: 'Untested' // Low priority
+      }
     },
     whois: (page) => {
       new Promise((res, rej) => {
