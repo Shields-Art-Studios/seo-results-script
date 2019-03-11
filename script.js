@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:14:19-07:00
+ * @Last modified time: 2019-03-11T13:16:48-07:00
  */
 
  // Add microformat parser to page
@@ -243,6 +243,8 @@ function analyze(html) {
         http.send()
       }).then(res => {
         return res
+      }).catch(err => {
+        return err
       })
     },
     googlePreviewSnippet: (page) => {
@@ -270,6 +272,8 @@ function analyze(html) {
         http.send()
       }).then(res => {
         return res
+      }).catch(err => {
+        return err
       })
     },
     socialMediaLikes: (page) => {
@@ -293,6 +297,8 @@ function analyze(html) {
         http.send()
       }).then(res => {
         return res
+      }).catch(err => {
+        return err
       })
     },
     schema: (page) => {
