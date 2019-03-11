@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-06T14:41:17-08:00
+ * @Last modified time: 2019-03-11T13:00:45-07:00
  */
 
  // Add microformat parser to page
@@ -258,21 +258,27 @@ function analyze(html) {
       http.send()
     },
     socialMediaLikes: (page) => {
-      let http = new XMLHttpRequest()
-      http.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            let data = JSON.parse(http.responseText)
-            return {
-              title: 'Social Media Shares',
-              result: {
-                facebook: data.Facebook.share_count,
-                pinterest: data.Pinterest
-              }
+      new Promise((res, rej) => {
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              let data = JSON.parse(http.responseText)
+              res({
+                title: 'Social Media Shares',
+                result: {
+                  facebook: data.Facebook.share_count,
+                  pinterest: data.Pinterest
+                }
+              })
+            } else {
+              rej()
             }
-          }
-      }
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
-      http.send()
+        }
+        http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
+        http.send()
+      }).then(res => {
+        return res
+      })
     },
     schema: (page) => {
       // Use microfilter parser
