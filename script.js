@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:38:02-07:00
+ * @Last modified time: 2019-03-11T14:03:46-07:00
  */
 
  // Add microformat parser to page
@@ -314,6 +314,6 @@ document.getElementById('submit').addEventListener('click', function() {
   // Build the request URL and send it!
   // Execute JSONP request
   let s = document.createElement('script')
-  s.src = 'https://shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url='+url+'&callback=analyze'
+  s.src = 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url='+url+'&callback=analyze'
   document.head.appendChild(s)
 })
