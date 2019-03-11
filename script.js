@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:00:45-07:00
+ * @Last modified time: 2019-03-11T13:03:00-07:00
  */
 
  // Add microformat parser to page
@@ -227,35 +227,47 @@ function analyze(html) {
       }
     },
     speed: (page) => {
-      let http = new XMLHttpRequest()
-      http.onreadystatechange = function() {
-        if (this.readystate == 4 && this.status == 200) {
-          return {
-            title: 'Speed Test',
-            result: JSON.parse(http.responseText)
+      new Promise((res, rej) => {
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function() {
+          if (this.readystate == 4 && this.status == 200) {
+            res({
+              title: 'Speed Test',
+              result: JSON.parse(http.responseText)
+            })
+          } else {
+            rej()
           }
         }
-      }
-      http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
-      http.send()
+        http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
+        http.send()
+      }).then(res => {
+        return res
+      })
     },
     googlePreviewSnippet: (page) => {
 
     },
     whois: (page) => {
-      // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
-      let http = new XMLHttpRequest()
-      http.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-             // Typical action to be performed when the document is ready:
-             return {
-               title: 'Whois Information',
-               result: http.responseText
-             }
-          }
-      };
-      http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
-      http.send()
+      new Promise((res, rej) => {
+        // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               // Typical action to be performed when the document is ready:
+               res ({
+                 title: 'Whois Information',
+                 result: http.responseText
+               })
+            } else {
+              rej()
+            }
+        }
+        http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
+        http.send()
+      }).then(res => {
+        return res
+      })
     },
     socialMediaLikes: (page) => {
       new Promise((res, rej) => {
