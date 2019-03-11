@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-11T13:21:55-07:00
+ * @Last modified time: 2019-03-11T13:30:51-07:00
  */
 
  // Add microformat parser to page
@@ -227,25 +227,17 @@ function analyze(html) {
       }
     },
     speed: (page) => {
-      new Promise((res, rej) => {
-        let http = new XMLHttpRequest()
-        http.onreadystatechange = function() {
-          if (this.readystate == 4 && this.status == 200) {
-            res({
-              title: 'Speed Test',
-              result: JSON.parse(http.responseText)
-            })
-          } else {
-            rej()
+      let http = new XMLHttpRequest()
+      http.onreadystatechange = function() {
+        if (this.readystate == 4 && this.status == 200) {
+          return {
+            title: 'Speed Test',
+            result: JSON.parse(http.responseText)
           }
         }
-        http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
-        http.send()
-      }).then(res => {
-        return res
-      }).catch(err => {
-        return err
-      })
+      }
+      http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
+      http.send()
     },
     googlePreviewSnippet: (page) => {
       return {
@@ -254,52 +246,36 @@ function analyze(html) {
       }
     },
     whois: (page) => {
-      new Promise((res, rej) => {
-        // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
-        let http = new XMLHttpRequest()
-        http.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-               // Typical action to be performed when the document is ready:
-               res ({
-                 title: 'Whois Information',
-                 result: http.responseText
-               })
-            } else {
-              rej()
-            }
-        }
-        http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
-        http.send()
-      }).then(res => {
-        return res
-      }).catch(err => {
-        return err
-      })
+      // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
+      let http = new XMLHttpRequest()
+      http.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+             // Typical action to be performed when the document is ready:
+             return {
+               title: 'Whois Information',
+               result: http.responseText
+             }
+          }
+      }
+      http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
+      http.send()
     },
     socialMediaLikes: (page) => {
-      new Promise((res, rej) => {
-        let http = new XMLHttpRequest()
-        http.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              let data = JSON.parse(http.responseText)
-              res({
-                title: 'Social Media Shares',
-                result: {
-                  facebook: data.Facebook.share_count,
-                  pinterest: data.Pinterest
-                }
-              })
-            } else {
-              rej()
+      let http = new XMLHttpRequest()
+      http.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(http.responseText)
+            return {
+              title: 'Social Media Shares',
+              result: {
+                facebook: data.Facebook.share_count,
+                pinterest: data.Pinterest
+              }
             }
-        }
-        http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
-        http.send()
-      }).then(res => {
-        return res
-      }).catch(err => {
-        return err
-      })
+          }
+      }
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
+      http.send()
     },
     schema: (page) => {
       // Use microfilter parser
