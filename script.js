@@ -4,10 +4,14 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-13T13:15:26-07:00
+ * @Last modified time: 2019-03-13T13:45:38-07:00
  */
 
  var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+
+var printResults = function(data => {
+  console.log(data)
+})
 
  // Add microformat parser to page
  let s = document.createElement('script')
@@ -84,7 +88,7 @@ function keywords(html) {
 
   // Build an array of word,frequency tuples and sorts by frequency
   let wordsAndCounts = Object.keys(wordCounts).map(key => {
-    return {
+    callback({
       'key': key,
       'frequency': wordCounts[key]
     }
@@ -144,7 +148,7 @@ function analyze(html) {
 
   let tests = {
     // headerTags(page)
-    headings: (page) => {
+    headings: (page, callback) => {
       let h1 = page.getElementsByTagName('h1')
       let h2 = page.getElementsByTagName('h2')
       let h3 = page.getElementsByTagName('h3')
@@ -167,96 +171,96 @@ function analyze(html) {
         result.result = 'Didn\'t pass.'
       }
 
-      return {
+      callback({
         title: 'Headings Check',
         result: result
-      }
+      })
     },
-    keywords: (page) => {
-      return {
+    keywords: (page, callback) => {
+      callback({
         title: 'Keywords Check',
         result: keywords(page)
-      }
+      })
     },
-    altTags: (page) => {
+    altTags: (page, callback) => {
       let images = page.getElementsByTagName('img')
       let result = 'Passed!'
       for (i of images) {
         if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
       }
-      return {
+      callback({
         title: 'Alt Tags Check',
         result: result
-      }
+      })
     },
-    linksWithinDomainName: (page) => {
+    linksWithinDomainName: (page, callback) => {
       let num = 0
       let host = parseURL(document.getElementById('domainName').value).host
       for (link of page.getElementsByTagName('a')) {
         if (parseURL(link.getAttribute('href')).host = host) num++
       }
-      return {
+      callback({
         title: 'Number of Links Within Domain Name',
         result: num
-      }
+      })
     },
-    xmlSitemap: (page) => {
-      return {
+    xmlSitemap: (page, callback) => {
+      callback({
         title: 'Sitemap Check',
         result: 'Untested'
-      }
+      })
     },
-    openGraph: (page) => {
-      return {
+    openGraph: (page, callback) => {
+      callback({
         title: 'OpenGraph Check',
         result: grabInfo(page) // in opengraph.js
       }
     },
-    viewport: (page) => {
+    viewport: (page, callback) => {
       let result = false
       for (el of document.getElementsByTagName('meta')) {
         if (el.getAttribute('name') == 'viewport') result = true
       }
-      return {
+      callback({
         title: 'Has Viewport Tag',
         result: result
-      }
+      })
     },
-    favicon: (page) => {
-      return {
+    favicon: (page, callback) => {
+      callback({
         title: 'Has Favicon',
         result: 'Untested' // Low priority
-      }
+      })
     },
-    speed: (page) => {
+    speed: (page, callback) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
-          return {
+          callback({
             title: 'Speed Test',
             result: JSON.parse(http.responseText)
-          }
+          })
         }
       }
       http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
       http.send()
     },
-    googlePreviewSnippet: (page) => {
-      return {
+    googlePreviewSnippet: (page, callback) => {
+      callback({
         title: 'Has Favicon',
         result: 'Untested' // Low priority
-      }
+      })
     },
-    whois: (page) => {
+    whois: (page, callback) => {
       // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
-             return {
+             callback ({
                title: 'Whois Information',
                result: http.responseText
-             }
+             })
           }
       }
       http.open('GET', 'https://hexillion.com/samples/WhoisXML/?query='+encodeURI(document.getElementById('domainName').value)+'&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson', true)
@@ -267,13 +271,13 @@ function analyze(html) {
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(http.responseText)
-            return {
+            callback({
               title: 'Social Media Shares',
               result: {
                 facebook: data.Facebook.share_count,
                 pinterest: data.Pinterest
               }
-            }
+            })
           }
       }
       http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
@@ -284,16 +288,16 @@ function analyze(html) {
       let options = {
         html: page.innerHTML
       }
-      return {
+      callback({
         title: 'Website Schema Check',
         result: Microformats.get(options) // in microformat-shiv.min.js
-      }
+      })
     },
     funTest: (page) => {
-      return {
+      callback({
         title: 'Fun Test',
         result: 'Looks pretty fun.'
-      }
+      })
     }
   }
 
@@ -303,7 +307,9 @@ function analyze(html) {
   console.log(page)
 
   // Perform analysis and render each result
-  setTimeout(console.log(tests), 5000)
+  Object.keys(tests).forEach(k => {
+    tests[k](page, printResults)
+  })
 }
 
 // Add http:// to domainname by default.
@@ -318,4 +324,5 @@ document.getElementById('submit').addEventListener('click', function() {
   let s = document.createElement('script')
   s.src = 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url='+Base64.encode(url)+'&callback=analyze'
   document.head.appendChild(s)
+
 })
