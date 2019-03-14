@@ -4,10 +4,62 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-14T15:58:48-07:00
+ * @Last modified time: 2019-03-14T16:01:54-07:00
  */
 
-import { NESTED, UNNESTED, TestResult, Category } from './resultClass.js'
+// Define classes
+const NESTED = true
+const UNNESTED = false
+
+class TestResult {
+  constructor(title, resultType, results) {
+    this.title = title
+    this.resultType = resultType // Can be NESTED or UNNESTED
+    this.results = results
+  }
+
+  renderResult(targetDiv) {
+    if (this.resultType === UNNESTED) targetDiv.textContent = this.title + ': ' + this.results
+    else {
+      // Nested results
+      targetDiv.textContent = this.title + ':'
+      let subResults = document.createElement('ul')
+      results.forEach(r => {
+
+      })
+    }
+  }
+}
+
+class Category {
+  constructor(title, id, page, tests) {
+    this.title = title
+    this.id = id
+    this.page = page
+    this.testResults = []
+    tests.forEach(t => {
+      test.execute(this.page, this.addResult)
+    })
+  }
+
+  addResult(result) {
+    this.testResults.push(result)
+  }
+
+  renderCategory() {
+    let cat = document.getElementById(this.id)
+    cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
+    Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
+      try {
+        this.testResults[index].renderResult(resElement)
+      } catch(err) {
+        console.log(err)
+        console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
+      }
+    })
+  }
+}
+
 
 // Helper Functions for Tests
 // Counts word frequency and returns a list
