@@ -4,67 +4,9 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-13T14:51:53-07:00
+ * @Last modified time: 2019-03-14T15:57:03-07:00
  */
-
- var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
-
-var printResults = data => {
-  console.log(data)
-}
-
- // Add microformat parser to page
- let s = document.createElement('script')
- s.src = 'https://shields-art-studios.github.io/seo-results-script/microformat-shiv.min.js'
- document.head.appendChild(s)
-
- // Add openGraph parser to page
- let s2 = document.createElement('script')
- s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
- document.head.appendChild(s2)
-
-var haveSentRequest = false // Set to true when the user requests for SEO results. If true, another request cannot be sent.
-
-// Parses a url for the hostname
-function parseURL(url) {
-    parsed_url = {}
-
-    if ( url == null || url.length == 0 )
-        return parsed_url
-
-    protocol_i = url.indexOf('://')
-    parsed_url.protocol = url.substr(0,protocol_i)
-
-    remaining_url = url.substr(protocol_i + 3, url.length)
-    domain_i = remaining_url.indexOf('/')
-    domain_i = domain_i == -1 ? remaining_url.length - 1 : domain_i
-    parsed_url.domain = remaining_url.substr(0, domain_i)
-    parsed_url.path = domain_i == -1 || domain_i + 1 == remaining_url.length ? null : remaining_url.substr(domain_i + 1, remaining_url.length)
-
-    domain_parts = parsed_url.domain.split('.')
-    switch ( domain_parts.length ){
-        case 2:
-          parsed_url.subdomain = null
-          parsed_url.host = domain_parts[0]
-          parsed_url.tld = domain_parts[1]
-          break
-        case 3:
-          parsed_url.subdomain = domain_parts[0]
-          parsed_url.host = domain_parts[1]
-          parsed_url.tld = domain_parts[2]
-          break
-        case 4:
-          parsed_url.subdomain = domain_parts[0]
-          parsed_url.host = domain_parts[1]
-          parsed_url.tld = domain_parts[2] + '.' + domain_parts[3]
-          break
-    }
-
-    parsed_url.parent_domain = parsed_url.host + '.' + parsed_url.tld
-
-    return parsed_url
-}
-
+// Helper Functions for Tests
 // Counts word frequency and returns a list
 function keywords(html) {
   // Remove script tags and other nonsense
@@ -101,54 +43,12 @@ function keywords(html) {
   return wordsAndCounts
 }
 
-// Formats one results category and renders it
-function formatResults(categoryObject) {
-  // Render category title
-  let html = '<div class="resultsHeader">'
-  html += '<p>' + categoryObject.title + '</p>'
-  html += '</div>'
+// Get everything set up
+  // Ensures only one website is tested per page reload
+  var alreadyTested = false
 
-  // Render results
-  html += '<div class="content is-medium">'
-  categoryObject.results.forEach(r => {
-    html += '<p>' + r.desc + ': ' + r.res + '</p>'
-  })
-  html += '</div>'
-
-  return html
-}
-
-// Clears the results div
-var targetDiv = document.getElementById('resultsDiv')
-targetDiv.innerHTML = ''
-
-// Renders the supplied html.
-function render(html) { targetDiv.innerHTML += html }
-
-function finishRobotsAnalysis(page) {
-  if (page.length > 0) {
-
-  }
-}
-
-function analyze(html) {
-  let map = {
-      '&amp;': '&',
-      '&#038;': '&',
-      '&lt;': '<',
-      '&gt;': '>',
-      '&quot;': '"',
-      '&#039;': "'",
-      '&#8217;': '’',
-      '&#8216;': '‘',
-      '&#8211;': '–',
-      '&#8212;': '—',
-      '&#8230;': '…',
-      '&#8221;': '”'
-  }
-
-  let tests = {
-    // headerTags(page)
+  // List of tests and functions
+  var tests = {
     headings: (page, callback) => {
       let h1 = page.getElementsByTagName('h1')
       let h2 = page.getElementsByTagName('h2')
@@ -172,16 +72,11 @@ function analyze(html) {
         result.result = 'Didn\'t pass.'
       }
 
-      callback({
-        title: 'Headings Check',
-        result: result
-      })
+      callback(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
+
     },
     keywords: (page, callback) => {
-      callback({
-        title: 'Keywords Check',
-        result: keywords(page)
-      })
+      callback(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
     },
     altTags: (page, callback) => {
       let images = page.getElementsByTagName('img')
@@ -189,10 +84,7 @@ function analyze(html) {
       for (i of images) {
         if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
       }
-      callback({
-        title: 'Alt Tags Check',
-        result: result
-      })
+      callback(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
     },
     linksWithinDomainName: (page, callback) => {
       let num = 0
@@ -200,60 +92,27 @@ function analyze(html) {
       for (link of page.getElementsByTagName('a')) {
         if (parseURL(link.getAttribute('href')).host = host) num++
       }
-      callback({
-        title: 'Number of Links Within Domain Name',
-        result: num
-      })
-    },
-    xmlSitemap: (page, callback) => {
-      callback({
-        title: 'Sitemap Check',
-        result: 'Untested'
-      })
+      callback(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
     openGraph: (page, callback) => {
-      callback({
-        title: 'OpenGraph Check',
-        result: grabInfo(page) // in opengraph.js
-      })
+      callback(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
     },
     viewport: (page, callback) => {
       let result = false
       for (el of document.getElementsByTagName('meta')) {
         if (el.getAttribute('name') == 'viewport') result = true
       }
-      callback({
-        title: 'Has Viewport Tag',
-        result: result
-      })
-    },
-    favicon: (page, callback) => {
-      callback({
-        title: 'Has Favicon',
-        result: 'Untested' // Low priority
-      })
+      callback(new TestResult('Has Viewport Tag', UNNESTED, result))
     },
     speed: (page, callback) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
-          callback({
-            title: 'Speed Test',
-            result: JSON.parse(http.responseText)
-          })
+          callback(new TestResult('Speed Test', UNNESTED, http.responseText))
         }
       }
       http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
       http.send()
-    },
-    googlePreviewSnippet: (page, callback) => {
-      callback({
-        // #1a0dab title - html tag
-        // #006621 link - url
-        // #545454 desc - meta description tag, up to 300 chars
-        title: 'Google Snippet Preview',
-        result: 'Untested' // Low priority
-      })
     },
     whois: (page, callback) => {
       // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
@@ -261,10 +120,18 @@ function analyze(html) {
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
-             callback ({
-               title: 'Whois Information',
-               result: JSON.parse(http.responseText)
-             })
+             let response = JSON.parse(http.responseText)
+             callback(new TestResult('Whois Information', NESTED,
+               [
+                 new TestResult('Domain', UNNESTED, response.name),
+                 new TestResult('Admin', UNNESTED, response.contacts.admin[0].name),
+                 new TestResult('Owner', UNNESTED, response.contacts.admin[0].name),
+                 new TestResult('Date Created', UNNESTED, response.created),
+                 new TestResult('Date Expires', UNNESTED, response.expires),
+                 new TestResult('Nameservers', UNNESTED, JSON.stringify(nameservers)),
+                 new TestResult('Registrar', UNNESTED, response.registrar.name)
+               ]
+             ))
           }
       }
       http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('domainName').value), true)
@@ -276,13 +143,10 @@ function analyze(html) {
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(http.responseText)
-            callback({
-              title: 'Social Media Shares',
-              result: {
-                facebook: data.Facebook.share_count,
-                pinterest: data.Pinterest
-              }
-            })
+            callback(new TestResult('Social Media Shares', NESTED, [
+              new TestResult('Facebook Shares', UNNESTED, data.Facebook.share_count),
+              new TestResult('Pinterest Pins', UNNESTED, data.Pinterest),
+            ]))
           }
       }
       http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('domainName').value), true)
@@ -290,44 +154,74 @@ function analyze(html) {
     },
     schema: (page, callback) => {
       // Use microfilter parser
-      let options = {
+      let data = Microformats.get({
         html: page.innerHTML
-      }
-      callback({
-        title: 'Website Schema Check',
-        result: Microformats.get(options) // in microformat-shiv.min.js
       })
-    },
-    funTest: (page, callback) => {
-      callback({
-        title: 'Fun Test',
-        result: 'Looks pretty fun.'
+      let results = []
+      data.result.items.forEach(i => {
+        results.push(new TestResult('Found', UNNESTED, i.type[0]))
       })
+      Object.keys(data.rels).forEach(k => {
+        results.push(new TestResult('Found '+ k, UNNESTED, data.rels[k][0]))
+      })
+
+      callback(new TestResult('Website Schema Check', NESTED, results))
     }
   }
 
-  html = html.replace(/\&[\w\d\#]{2,5}\;/g, (m) => map[m])
+  // This function was taken from stackoverflow. It just encodes url strings into Base64 for use with getRequestGenerator.php
+  var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+
+  // Add http:// to URLInput input by default.
+  document.getElementById('URLInput').value = 'http://'
+
+  // Download the target web page and perform analysis
+  document.getElementById('testButton').addEventListener('click', function() {
+    if(!alreadyTested) {
+
+      let url = encodeURI(document.getElementById('domainName').value)
+      // Download the target web page
+      // Build the request URL and send it!
+      // Execute JSONP request
+      let http = new XMLHttpRequest()
+      http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          analyze(http.responseText)
+        }
+      }
+      http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+      http.send()
+    }
+  })
+
+function analyze(htmlString) {
+  // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = html
-  console.log(page)
 
-  // Perform analysis and render each result
-  Object.keys(tests).forEach(k => {
-    tests[k](page, printResults)
-  })
+  // List of categories and tests
+  // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
+  var categories = {
+    general: new Category(
+      'General',
+      'generalResults',
+      page,
+      [tests['whois'], tests['headings'], tests['keywords'], tests['altTags'], tests['links'], tests['viewport'], tests['schema']]
+    ),
+    speed: new Category(
+      'Speed Tests',
+      'speedResults',
+      page,
+      [tests['speed']]
+    ),
+    social: new Category(
+      'Social Media',
+      'socialResults',
+      page,
+      [tests['socialMediaLikes'], tests['openGraph']]
+    )
+  }
+
+
+
 }
-
-// Add http:// to domainname by default.
-document.getElementById('domainName').value = 'http://'
-
-// Download the target web page and perform analysis
-document.getElementById('submit').addEventListener('click', function() {
-  let url = encodeURI(document.getElementById('domainName').value)
-  // Download the target web page
-  // Build the request URL and send it!
-  // Execute JSONP request
-  let s = document.createElement('script')
-  s.src = 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url='+Base64.encode(url)+'&callback=analyze'
-  document.head.appendChild(s)
-
-})
