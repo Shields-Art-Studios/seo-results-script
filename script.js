@@ -4,8 +4,11 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-14T15:57:03-07:00
+ * @Last modified time: 2019-03-14T15:58:48-07:00
  */
+
+import { NESTED, UNNESTED, TestResult, Category } from './resultClass.js'
+
 // Helper Functions for Tests
 // Counts word frequency and returns a list
 function keywords(html) {
