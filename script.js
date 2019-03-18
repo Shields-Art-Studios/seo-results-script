@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:12:48-07:00
+ * @Last modified time: 2019-03-18T11:14:43-07:00
  */
 
 // Define classes
@@ -39,7 +39,7 @@ class Category {
     this.testResults = []
     this.resultsNeeded = tests.length
     tests.forEach(t => {
-      test.execute(this.page, this.addResult)
+      t.execute(this.page, this.addResult)
     })
   }
 
