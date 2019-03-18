@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:00:42-07:00
+ * @Last modified time: 2019-03-18T11:12:48-07:00
  */
 
 // Define classes
@@ -37,6 +37,7 @@ class Category {
     this.id = id
     this.page = page
     this.testResults = []
+    this.resultsNeeded = tests.length
     tests.forEach(t => {
       test.execute(this.page, this.addResult)
     })
@@ -47,16 +48,21 @@ class Category {
   }
 
   renderCategory() {
-    let cat = document.getElementById(this.id)
-    cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
-    Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
-      try {
-        this.testResults[index].renderResult(resElement)
-      } catch(err) {
-        console.log(err)
-        console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
-      }
-    })
+    if (this.testResults < this.resultsNeeded) {
+      // Wait 500ms for requests/tests to finish
+      setTimeout(this.renderCategory, 500)
+    } else {
+      let cat = document.getElementById(this.id)
+      cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
+      Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
+        try {
+          this.testResults[index].renderResult(resElement)
+        } catch(err) {
+          console.log(err)
+          console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
+        }
+      })
+    }
   }
 }
 
@@ -253,7 +259,7 @@ function keywords(html) {
 function analyze(htmlString) {
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
-  page.innerHTML = html
+  page.innerHTML = htmlString
 
   // List of categories and tests
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
