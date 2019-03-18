@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:33:37-07:00
+ * @Last modified time: 2019-03-18T11:35:13-07:00
  */
 
 // Define classes
@@ -272,7 +272,7 @@ function analyze(htmlString) {
       'General',
       'generalResults',
       page,
-      [tests['whois'], tests['headings'], tests['keywords'], tests['altTags'], tests['links'], tests['viewport'], tests['schema']]
+      [tests['whois'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['schema']]
     ),
     speed: new Category(
       'Speed Tests',
