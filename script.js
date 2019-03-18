@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T12:24:42-07:00
+ * @Last modified time: 2019-03-18T12:27:25-07:00
  */
 
  // Add microformat parser to page
@@ -28,7 +28,7 @@ class TestResult {
     this.results = results
   }
 
-  this.renderResult = (targetDiv) => {
+  renderResult: (targetDiv) => {
     if (this.resultType === UNNESTED) targetDiv.textContent = this.title + ': ' + this.results
     else {
       // Nested results
@@ -56,11 +56,11 @@ class Category {
     })
   }
 
-  this.addResult = (result) => {
+  addResult: (result) => {
     this.testResults.push(result)
   }
 
-  this.renderCategory = () => {
+  renderCategory: () => {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       setTimeout(this.renderCategory, 500)
