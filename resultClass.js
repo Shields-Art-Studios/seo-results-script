@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: resultClass.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-14T15:43:42-07:00
+ * @Last modified time: 2019-03-14T16:26:24-07:00
  */
 export const NESTED = true
 export const UNNESTED = false
@@ -34,6 +34,7 @@ export class Category {
     this.title = title
     this.id = id
     this.page = page
+    this.testNum = tests.length
     this.testResults = []
     tests.forEach(t => {
       test.execute(this.page, this.addResult)
@@ -42,13 +43,15 @@ export class Category {
 
   addResult(result) {
     this.testResults.push(result)
+    testNum--
   }
 
   renderCategory() {
     let cat = document.getElementById(this.id)
     cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
-    Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
+    tests.forEach((resElement, index) => {
       try {
+        console.log(renderResult(resElement))
         this.testResults[index].renderResult(resElement)
       } catch(err) {
         console.log(err)
