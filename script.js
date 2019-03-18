@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:21:03-07:00
+ * @Last modified time: 2019-03-18T11:24:38-07:00
  */
 
 // Define classes
@@ -184,6 +184,7 @@ function keywords(html) {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
              let response = JSON.parse(http.responseText)
+             console.log(response)
              callback(new TestResult('Whois Information', NESTED,
                [
                  new TestResult('Domain', UNNESTED, response.name),
