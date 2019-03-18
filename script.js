@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:54:52-07:00
+ * @Last modified time: 2019-03-18T12:00:11-07:00
  */
 
  // Add microformat parser to page
@@ -164,7 +164,7 @@ function keywords(html) {
   // List of tests and functions
   var tests = {
     headings: (page, callbackObj) => {
-      console.log(callBackObj)
+      console.log(callbackObj)
       let h1 = page.getElementsByTagName('h1')
       let h2 = page.getElementsByTagName('h2')
       let h3 = page.getElementsByTagName('h3')
