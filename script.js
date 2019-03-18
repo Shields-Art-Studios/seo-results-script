@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:42:22-07:00
+ * @Last modified time: 2019-03-18T11:43:42-07:00
  */
 
  // Add microformat parser to page
@@ -340,6 +340,7 @@ function analyze(htmlString) {
   }
 
   // Execute each test
+  console.log(categories)
   Object.keys(categories).forEach(k => {
     categories[k].renderResult()
   })
