@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:14:43-07:00
+ * @Last modified time: 2019-03-18T11:21:03-07:00
  */
 
 // Define classes
@@ -25,7 +25,9 @@ class TestResult {
       targetDiv.textContent = this.title + ':'
       let subResults = document.createElement('ul')
       results.forEach(r => {
-
+        let res = document.createElement('li')
+        res.textContent = r.renderResult
+        subResults.appendChild(res)
       })
     }
   }
@@ -39,7 +41,7 @@ class Category {
     this.testResults = []
     this.resultsNeeded = tests.length
     tests.forEach(t => {
-      t.execute(this.page, this.addResult)
+      t(this.page, this.addResult)
     })
   }
 
