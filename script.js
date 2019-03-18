@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T12:38:55-07:00
+ * @Last modified time: 2019-03-18T12:39:21-07:00
  */
 
  // Add microformat parser to page
@@ -61,6 +61,7 @@ class Category {
   }
 
   renderCategory(cats) {
+    console.log(cats)
     if (cats.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       setTimeout(cats.renderCategory, 500)
