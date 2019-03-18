@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:38:39-07:00
+ * @Last modified time: 2019-03-18T11:41:03-07:00
  */
 
  // Add microformat parser to page
@@ -272,6 +272,7 @@ function keywords(html) {
       let data = Microformats.get({
         html: page.innerHTML
       })
+      console.log(data)
       let results = []
       data.result.items.forEach(i => {
         results.push(new TestResult('Found', UNNESTED, i.type[0]))
