@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:24:38-07:00
+ * @Last modified time: 2019-03-18T11:28:57-07:00
  */
 
 // Define classes
@@ -192,7 +192,7 @@ function keywords(html) {
                  new TestResult('Owner', UNNESTED, response.contacts.admin[0].name),
                  new TestResult('Date Created', UNNESTED, response.created),
                  new TestResult('Date Expires', UNNESTED, response.expires),
-                 new TestResult('Nameservers', UNNESTED, JSON.stringify(nameservers)),
+                 new TestResult('Nameservers', UNNESTED, JSON.stringify(response.nameservers)),
                  new TestResult('Registrar', UNNESTED, response.registrar.name)
                ]
              ))
