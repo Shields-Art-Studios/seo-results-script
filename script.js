@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:28:57-07:00
+ * @Last modified time: 2019-03-18T11:31:01-07:00
  */
 
 // Define classes
@@ -41,7 +41,7 @@ class Category {
     this.testResults = []
     this.resultsNeeded = tests.length
     tests.forEach(t => {
-      t(this.page, this.addResult)
+      t(this.page, this)
     })
   }
 
@@ -112,7 +112,7 @@ function keywords(html) {
 
   // List of tests and functions
   var tests = {
-    headings: (page, callback) => {
+    headings: (page, callbackObj) => {
       let h1 = page.getElementsByTagName('h1')
       let h2 = page.getElementsByTagName('h2')
       let h3 = page.getElementsByTagName('h3')
@@ -135,49 +135,49 @@ function keywords(html) {
         result.result = 'Didn\'t pass.'
       }
 
-      callback(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
+      callbackObj.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
 
     },
-    keywords: (page, callback) => {
-      callback(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
+    keywords: (page, callbackObj) => {
+      callbackObj.addResult(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
     },
-    altTags: (page, callback) => {
+    altTags: (page, callbackObj) => {
       let images = page.getElementsByTagName('img')
       let result = 'Passed!'
       for (i of images) {
         if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
       }
-      callback(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
+      callbackObj.addResult(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
     },
-    linksWithinDomainName: (page, callback) => {
+    linksWithinDomainName: (page, callbackObj) => {
       let num = 0
       let host = parseURL(document.getElementById('URLInput').value).host
       for (link of page.getElementsByTagName('a')) {
         if (parseURL(link.getAttribute('href')).host = host) num++
       }
-      callback(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
+      callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
-    openGraph: (page, callback) => {
-      callback(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
+    openGraph: (page, callbackObj) => {
+      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
     },
-    viewport: (page, callback) => {
+    viewport: (page, callbackObj) => {
       let result = false
       for (el of document.getElementsByTagName('meta')) {
         if (el.getAttribute('name') == 'viewport') result = true
       }
-      callback(new TestResult('Has Viewport Tag', UNNESTED, result))
+      callbackObj.addResult(new TestResult('Has Viewport Tag', UNNESTED, result))
     },
-    speed: (page, callback) => {
+    speed: (page, callbackObj) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
-          callback(new TestResult('Speed Test', UNNESTED, http.responseText))
+          callbackObj.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
         }
       }
       http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('URLInput').value))
       http.send()
     },
-    whois: (page, callback) => {
+    whois: (page, callbackObj) => {
       // https://hexillion.com/samples/WhoisXML/?query=google.com&_accept=application%2Fvnd.hexillion.whois-v2%2Bjson
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
@@ -185,7 +185,7 @@ function keywords(html) {
              // Typical action to be performed when the document is ready:
              let response = JSON.parse(http.responseText)
              console.log(response)
-             callback(new TestResult('Whois Information', NESTED,
+             callbackObj.addResult(new TestResult('Whois Information', NESTED,
                [
                  new TestResult('Domain', UNNESTED, response.name),
                  new TestResult('Admin', UNNESTED, response.contacts.admin[0].name),
@@ -202,12 +202,12 @@ function keywords(html) {
       http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'));
       http.send()
     },
-    socialMediaLikes: (page, callback) => {
+    socialMediaLikes: (page, callbackObj) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(http.responseText)
-            callback(new TestResult('Social Media Shares', NESTED, [
+            callbackObj.addResult(new TestResult('Social Media Shares', NESTED, [
               new TestResult('Facebook Shares', UNNESTED, data.Facebook.share_count),
               new TestResult('Pinterest Pins', UNNESTED, data.Pinterest),
             ]))
@@ -216,7 +216,7 @@ function keywords(html) {
       http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('URLInput').value), true)
       http.send()
     },
-    schema: (page, callback) => {
+    schema: (page, callbackObj) => {
       // Use microfilter parser
       let data = Microformats.get({
         html: page.innerHTML
@@ -229,7 +229,7 @@ function keywords(html) {
         results.push(new TestResult('Found '+ k, UNNESTED, data.rels[k][0]))
       })
 
-      callback(new TestResult('Website Schema Check', NESTED, results))
+      callbackObj.addResult(new TestResult('Website Schema Check', NESTED, results))
     }
   }
 
