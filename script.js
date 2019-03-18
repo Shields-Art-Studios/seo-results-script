@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T12:04:55-07:00
+ * @Last modified time: 2019-03-18T12:11:45-07:00
  */
 
  // Add microformat parser to page
@@ -185,7 +185,7 @@ function keywords(html) {
       } else {
         result.result = 'Didn\'t pass.'
       }
-
+      console.log(callbackObj)
       callbackObj.prototype.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
 
     },
