@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T12:50:05-07:00
+ * @Last modified time: 2019-03-18T13:02:46-07:00
  */
 
  // Add microformat parser to page
@@ -60,16 +60,16 @@ class Category {
     this.testResults.push(result)
   }
 
-  renderCategory(resultsNeeded, testResults, renderCategory) {
-    if (testResults.length < resultsNeeded) {
+  renderCategory(category) {
+    if (category.testResults.length < category.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
-      setTimeout(renderCategory, 500)
+      setTimeout(category.renderCategory, 500)
     } else {
       let cat = document.getElementById(this.id)
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
       Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
         try {
-          testResults[index].renderResult(resElement)
+          category.testResults[index].renderResult(resElement)
         } catch(err) {
           console.log(err)
           console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
@@ -343,6 +343,6 @@ function analyze(htmlString) {
   console.log(categories)
   Object.keys(categories).forEach(k => {
     let category = categories[k]
-    categories[k].renderCategory(category.resultsNeeded, category.testResults, categories[k].renderCategory)
+    categories[k].renderCategory(category)
   })
 }
