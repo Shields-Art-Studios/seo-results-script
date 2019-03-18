@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T12:11:45-07:00
+ * @Last modified time: 2019-03-18T12:16:04-07:00
  */
 
  // Add microformat parser to page
@@ -186,11 +186,11 @@ function keywords(html) {
         result.result = 'Didn\'t pass.'
       }
       console.log(callbackObj)
-      callbackObj.prototype.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
+      callbackObj.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
 
     },
     keywords: (page, callbackObj) => {
-      callbackObj.prototype.addResult(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
+      callbackObj.addResult(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
     },
     altTags: (page, callbackObj) => {
       let images = page.getElementsByTagName('img')
@@ -198,7 +198,7 @@ function keywords(html) {
       for (i of images) {
         if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
       }
-      callbackObj.prototype.addResult(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
+      callbackObj.addResult(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
     },
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
@@ -206,23 +206,23 @@ function keywords(html) {
       for (link of page.getElementsByTagName('a')) {
         if (parseURL(link.getAttribute('href')).host = host) num++
       }
-      callbackObj.prototype.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
+      callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
     openGraph: (page, callbackObj) => {
-      callbackObj.prototype.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
+      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
     },
     viewport: (page, callbackObj) => {
       let result = false
       for (el of document.getElementsByTagName('meta')) {
         if (el.getAttribute('name') == 'viewport') result = true
       }
-      callbackObj.prototype.addResult(new TestResult('Has Viewport Tag', UNNESTED, result))
+      callbackObj.addResult(new TestResult('Has Viewport Tag', UNNESTED, result))
     },
     speed: (page, callbackObj) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
-          callbackObj.prototype.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
+          callbackObj.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
         }
       }
       http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('URLInput').value))
@@ -236,7 +236,7 @@ function keywords(html) {
              // Typical action to be performed when the document is ready:
              let response = JSON.parse(http.responseText)
              console.log(response)
-             callbackObj.prototype.addResult(new TestResult('Whois Information', NESTED,
+             callbackObj.addResult(new TestResult('Whois Information', NESTED,
                [
                  new TestResult('Domain', UNNESTED, response.name),
                  new TestResult('Admin', UNNESTED, response.contacts.admin[0].name),
@@ -258,7 +258,7 @@ function keywords(html) {
       http.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(http.responseText)
-            callbackObj.prototype.addResult(new TestResult('Social Media Shares', NESTED, [
+            callbackObj.addResult(new TestResult('Social Media Shares', NESTED, [
               new TestResult('Facebook Shares', UNNESTED, data.Facebook.share_count),
               new TestResult('Pinterest Pins', UNNESTED, data.Pinterest),
             ]))
@@ -281,7 +281,7 @@ function keywords(html) {
         results.push(new TestResult('Found '+ k, UNNESTED, data.rels[k][0]))
       })
 
-      callbackObj.prototype.addResult(new TestResult('Website Schema Check', NESTED, results))
+      callbackObj.addResult(new TestResult('Website Schema Check', NESTED, results))
     }
   }
 
