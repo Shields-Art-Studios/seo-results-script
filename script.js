@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:31:01-07:00
+ * @Last modified time: 2019-03-18T11:33:37-07:00
  */
 
 // Define classes
@@ -41,6 +41,7 @@ class Category {
     this.testResults = []
     this.resultsNeeded = tests.length
     tests.forEach(t => {
+      console.log(t)
       t(this.page, this)
     })
   }
