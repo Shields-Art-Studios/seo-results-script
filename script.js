@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-18T11:49:29-07:00
+ * @Last modified time: 2019-03-18T11:53:01-07:00
  */
 
  // Add microformat parser to page
@@ -26,19 +26,19 @@ class TestResult {
     this.title = title
     this.resultType = resultType // Can be NESTED or UNNESTED
     this.results = results
-  }
 
-  renderResult: function(targetDiv) {
-    if (this.resultType === UNNESTED) targetDiv.textContent = this.title + ': ' + this.results
-    else {
-      // Nested results
-      targetDiv.textContent = this.title + ':'
-      let subResults = document.createElement('ul')
-      results.forEach(r => {
-        let res = document.createElement('li')
-        res.textContent = r.renderResult
-        subResults.appendChild(res)
-      })
+    this.renderResult = function(targetDiv) {
+      if (this.resultType === UNNESTED) targetDiv.textContent = this.title + ': ' + this.results
+      else {
+        // Nested results
+        targetDiv.textContent = this.title + ':'
+        let subResults = document.createElement('ul')
+        results.forEach(r => {
+          let res = document.createElement('li')
+          res.textContent = r.renderResult
+          subResults.appendChild(res)
+        })
+      }
     }
   }
 }
@@ -54,27 +54,27 @@ class Category {
       console.log(t)
       t(this.page, this)
     })
-  }
 
-  addResult: function(result) {
-    this.testResults.push(result)
-  }
+    this.addResult = function(result) {
+      this.testResults.push(result)
+    }
 
-  renderCategory: function() {
-    if (this.testResults < this.resultsNeeded) {
-      // Wait 500ms for requests/tests to finish
-      setTimeout(this.renderCategory, 500)
-    } else {
-      let cat = document.getElementById(this.id)
-      cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
-      Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
-        try {
-          this.testResults[index].renderResult(resElement)
-        } catch(err) {
-          console.log(err)
-          console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
-        }
-      })
+    this.renderCategory = function() {
+      if (this.testResults < this.resultsNeeded) {
+        // Wait 500ms for requests/tests to finish
+        setTimeout(this.renderCategory, 500)
+      } else {
+        let cat = document.getElementById(this.id)
+        cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
+        Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
+          try {
+            this.testResults[index].renderResult(resElement)
+          } catch(err) {
+            console.log(err)
+            console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
+          }
+        })
+      }
     }
   }
 }
