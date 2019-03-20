@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T16:48:37-07:00
+ * @Last modified time: 2019-03-20T16:51:24-07:00
  */
 
  // Add microformat parser to page
@@ -51,7 +51,6 @@ class Category {
     this.testResults = []
     this.resultsNeeded = tests.length
     tests.forEach(t => {
-      console.log(t)
       t(this.page, this)
     })
   }
@@ -64,6 +63,7 @@ class Category {
     console.log(this)
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
+      console.log('waiting...')
       setTimeout(this.renderCategory, 500)
     } else {
       let cat = document.getElementById(this.id)
