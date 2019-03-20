@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T16:34:00-07:00
+ * @Last modified time: 2019-03-20T16:39:49-07:00
  */
 
  // Add microformat parser to page
@@ -60,17 +60,17 @@ class Category {
     this.testResults.push(result)
   }
 
-  renderCategory(category) {
-    category = JSON.parse(category)
-    if (category.testResults.length < category.resultsNeeded) {
+  renderCategory() {
+    console.log(this)
+    if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
-      setTimeout(category.renderCategory, 500)
+      setTimeout(this.renderCategory, 500)
     } else {
       let cat = document.getElementById(this.id)
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
-      Array.from(cat.getElementsByClassName('result')).forEach((resElement, index) => {
+      Array.from(cat.getElementsByClassName('result')).forEach(function(resElement, index) {
         try {
-          category.testResults[index].renderResult(resElement)
+          this.testResults[index].renderResult(resElement)
         } catch(err) {
           console.log(err)
           console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
@@ -342,8 +342,7 @@ function analyze(htmlString) {
 
   // Execute each test
   console.log(categories)
-  Object.keys(categories).forEach(k => {
-    let category = categories[k]
-    categories[k].renderCategory(JSON.stringify(category))
+  Object.keys(categories).forEach(function(k) {
+    categories[k].renderCategory()
   })
 }
