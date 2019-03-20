@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T16:47:04-07:00
+ * @Last modified time: 2019-03-20T16:48:37-07:00
  */
 
  // Add microformat parser to page
@@ -61,16 +61,16 @@ class Category {
   }
 
   renderCategory() {
-    console.log(self)
-    if (self.testResults.length < self.resultsNeeded) {
+    console.log(this)
+    if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
-      setTimeout(self.renderCategory, 500)
+      setTimeout(this.renderCategory, 500)
     } else {
       let cat = document.getElementById(this.id)
-      cat.getElementsByClassName('categoryTitle')[0].textContent = self.title
+      cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
       Array.from(cat.getElementsByClassName('result')).forEach(function(resElement, index) {
         try {
-          self.testResults[index].renderResult(resElement)
+          this.testResults[index].renderResult(resElement)
         } catch(err) {
           console.log(err)
           console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
