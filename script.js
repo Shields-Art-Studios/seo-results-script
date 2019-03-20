@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T16:23:04-07:00
+ * @Last modified time: 2019-03-20T16:34:00-07:00
  */
 
  // Add microformat parser to page
@@ -61,6 +61,7 @@ class Category {
   }
 
   renderCategory(category) {
+    category = JSON.parse(category)
     if (category.testResults.length < category.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       setTimeout(category.renderCategory, 500)
@@ -343,7 +344,6 @@ function analyze(htmlString) {
   console.log(categories)
   Object.keys(categories).forEach(k => {
     let category = categories[k]
-    console.log(category)
     categories[k].renderCategory(JSON.stringify(category))
   })
 }
