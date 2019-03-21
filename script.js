@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:31:17-07:00
+ * @Last modified time: 2019-03-20T17:33:56-07:00
  */
 
  // Add microformat parser to page
@@ -67,11 +67,12 @@ class Category {
       setTimeout(this.renderCategory.bind(this), 500)
     } else {
       let cat = document.getElementById(this.id)
+      let parent = cat.getElementsByClassName('categoryTitle')[0].parentElement
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
       this.testResults.forEach(res => {
-        let resElement = document.createElement
+        let resElement = document.createElement('p')
         this.testResults[index].renderResult(resElement)
-        cat.appendChild(resElement)
+        parent.appendChild(resElement)
       })
     }
   }
