@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:23:53-07:00
+ * @Last modified time: 2019-03-20T17:31:17-07:00
  */
 
  // Add microformat parser to page
@@ -68,13 +68,10 @@ class Category {
     } else {
       let cat = document.getElementById(this.id)
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
-      Array.from(cat.getElementsByClassName('result')).forEach(function(resElement, index) {
-        try {
-          this.testResults[index].renderResult(resElement)
-        } catch(err) {
-          console.log(err)
-          console.log('This error may be caused by not having enough result elements on your page, or by having too many for category:' + this.title + '.')
-        }
+      this.testResults.forEach(res => {
+        let resElement = document.createElement
+        this.testResults[index].renderResult(resElement)
+        cat.appendChild(resElement)
       })
     }
   }
