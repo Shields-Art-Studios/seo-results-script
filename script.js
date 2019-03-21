@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:19:35-07:00
+ * @Last modified time: 2019-03-20T17:21:51-07:00
  */
 
  // Add microformat parser to page
@@ -64,7 +64,7 @@ class Category {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       console.log('waiting...')
-      setTimeout(this.renderCategory, 500)
+      setTimeout(this.renderCategory.bind(this), 500)
     } else {
       let cat = document.getElementById(this.id)
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
@@ -342,8 +342,8 @@ function analyze(htmlString) {
 
   // Execute each test
   console.log(categories)
-  let catKeyList = Object.keys(categories)
-  for (let i = 0; i < catKeyList.length(); i++) {
-    categories[catKeyList[i]].renderCategory()
-  }
+  Object.keys(categories).forEach(function(k) {
+    let catFunction = categories[k].renderCategory.bind(categories[k])
+    catFunction()
+  })
 }
