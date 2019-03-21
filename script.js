@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T15:11:44-07:00
+ * @Last modified time: 2019-03-21T15:16:42-07:00
  */
 
  // Add microformat parser to page
@@ -212,7 +212,7 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
     openGraph: (page, callbackObj) => {
-      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
+      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page.innerHTML))))
     },
     viewport: (page, callbackObj) => {
       let result = false
