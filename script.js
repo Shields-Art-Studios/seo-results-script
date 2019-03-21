@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T14:35:12-07:00
+ * @Last modified time: 2019-03-21T14:46:17-07:00
  */
 
  // Add microformat parser to page
@@ -64,16 +64,20 @@ class Category {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       console.log('waiting...' + this.testResults.length + ',' + this.resultsNeeded)
-      setTimeout(this.renderCategory.bind(this), 500)
+      setTimeout(this.renderCategory.bind(this), 1000)
     } else {
-      let cat = document.getElementById(this.id)
-      let parent = cat.getElementsByClassName('categoryTitle')[0].parentElement
-      cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
+      let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
+      let catTitle = document.createElement('span')
+      catTitle.classList.add('categoryTitle')
+      catTitle.textContent = this.title
+      cat.appendChild(catTitle)
+      let resList = document.createElement('ul')
+      cat.appendChild(resList)
       this.testResults.forEach(res => {
-        let resElement = document.createElement('p')
+        let resElement = document.createElement('li')
         resElement.classList.add('result')
         res.renderResult(resElement)
-        parent.appendChild(resElement)
+        resList.appendChild(resElement)
       })
     }
   }
@@ -320,10 +324,16 @@ function analyze(htmlString) {
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
   var categories = {
     general: new Category(
-      'General',
-      'generalResults',
+      'General', // Title that renders on the page
+      'generalResults', // CSS ID
+      page, // Always type page just like this
+      [tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['schema']] // List the tests
+    ),
+    whois: new Category(
+      'Domain Registration Information',
+      'whoisResults',
       page,
-      [tests['whois'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['schema']]
+      [tests['whois']]
     ),
     speed: new Category(
       'Speed Tests',
