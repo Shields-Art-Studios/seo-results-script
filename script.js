@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:17:49-07:00
+ * @Last modified time: 2019-03-20T17:19:35-07:00
  */
 
  // Add microformat parser to page
@@ -343,7 +343,7 @@ function analyze(htmlString) {
   // Execute each test
   console.log(categories)
   let catKeyList = Object.keys(categories)
-  for (let i = 0; i < catKeyList.length() i++) {
+  for (let i = 0; i < catKeyList.length(); i++) {
     categories[catKeyList[i]].renderCategory()
   }
 }
