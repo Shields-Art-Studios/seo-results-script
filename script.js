@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T15:05:28-07:00
+ * @Last modified time: 2019-03-21T15:09:43-07:00
  */
 
  // Add microformat parser to page
@@ -253,8 +253,8 @@ function keywords(html) {
              ))
           }
       }
-      http.open('GET', 'https://www.whoisxmlapi.com/whoislookup.php?domainName='+encodeURI(document.getElementById('URLInput').value)+'&outputFormat=JSON', true)
-      //http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'));
+      http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('URLInput').value), true)
+      http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'));
       http.send()
     },
     socialMediaLikes: (page, callbackObj) => {
