@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:35:09-07:00
+ * @Last modified time: 2019-03-21T14:29:32-07:00
  */
 
  // Add microformat parser to page
@@ -34,7 +34,7 @@ class TestResult {
       // Nested results
       targetDiv.textContent = this.title + ':'
       let subResults = document.createElement('ul')
-      results.forEach(r => {
+      this.results.forEach(r => {
         let res = document.createElement('li')
         res.textContent = r.renderResult
         subResults.appendChild(res)
