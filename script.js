@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T14:46:17-07:00
+ * @Last modified time: 2019-03-21T14:48:18-07:00
  */
 
  // Add microformat parser to page
@@ -67,10 +67,10 @@ class Category {
       setTimeout(this.renderCategory.bind(this), 1000)
     } else {
       let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
-      let catTitle = document.createElement('span')
-      catTitle.classList.add('categoryTitle')
-      catTitle.textContent = this.title
-      cat.appendChild(catTitle)
+      // let catTitle = document.createElement('span')
+      // catTitle.classList.add('categoryTitle')
+      // catTitle.textContent = this.title
+      // cat.appendChild(catTitle)
       let resList = document.createElement('ul')
       cat.appendChild(resList)
       this.testResults.forEach(res => {
