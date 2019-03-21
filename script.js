@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-20T17:33:56-07:00
+ * @Last modified time: 2019-03-20T17:35:09-07:00
  */
 
  // Add microformat parser to page
@@ -71,7 +71,7 @@ class Category {
       cat.getElementsByClassName('categoryTitle')[0].textContent = this.title
       this.testResults.forEach(res => {
         let resElement = document.createElement('p')
-        this.testResults[index].renderResult(resElement)
+        res.renderResult(resElement)
         parent.appendChild(resElement)
       })
     }
