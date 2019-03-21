@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T15:16:42-07:00
+ * @Last modified time: 2019-03-21T15:21:44-07:00
  */
 
  // Add microformat parser to page
@@ -212,7 +212,7 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
     openGraph: (page, callbackObj) => {
-      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page.innerHTML))))
+      callbackObj.addResult(new TestResult('OpenGraph Check', UNNESTED, JSON.stringify(grabInfo(page))))
     },
     viewport: (page, callbackObj) => {
       let result = false
@@ -306,6 +306,7 @@ function keywords(html) {
       http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           analyze(http.responseText)
+          console.log(http.responseText)
         }
       }
       http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
