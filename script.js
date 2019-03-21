@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T15:09:43-07:00
+ * @Last modified time: 2019-03-21T15:11:44-07:00
  */
 
  // Add microformat parser to page
@@ -189,7 +189,6 @@ function keywords(html) {
       } else {
         result.result = 'Didn\'t pass.'
       }
-      console.log(callbackObj)
       callbackObj.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
 
     },
@@ -226,6 +225,7 @@ function keywords(html) {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (this.readystate == 4 && this.status == 200) {
+          console.log(http.responseText)
           callbackObj.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
         }
       }
@@ -276,7 +276,6 @@ function keywords(html) {
       let data = Microformats.get({
         html: page.innerHTML
       })
-      console.log(data)
       let results = []
       data.items.forEach(i => {
         results.push(new TestResult('Found', UNNESTED, i.type[0]))
@@ -297,7 +296,6 @@ function keywords(html) {
 
   // Download the target web page and perform analysis
   document.getElementById('testButton').addEventListener('click', function() {
-    console.log('Click')
     if(!alreadyTested) {
 
       let url = encodeURI(document.getElementById('URLInput').value)
@@ -319,7 +317,6 @@ function analyze(htmlString) {
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
-  console.log(page)
 
   // List of categories and tests
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
@@ -351,7 +348,6 @@ function analyze(htmlString) {
   }
 
   // Execute each test
-  console.log(categories)
   Object.keys(categories).forEach(function(k) {
     let catFunction = categories[k].renderCategory.bind(categories[k])
     catFunction()
