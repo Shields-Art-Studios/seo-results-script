@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-26T15:43:10-07:00
+ * @Last modified time: 2019-03-26T15:51:13-07:00
  */
 
  // Add microformat parser to page
@@ -195,7 +195,19 @@ function keywords(html) {
     },
     keywords: (page, callbackObj) => {
       // TODO: Filter common words, Google Snippet Generator
-      callbackObj.addResult(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
+      let keywords = keywords(page)
+      let badKeywords = [
+        'the',
+        'a',
+        '1'
+      ]
+      let results = []
+      keywords.forEach(k => {
+        if (badKeywords.indexOf(k.key) === -1) {
+          results.push(new TestResult(k.frequency, UNNESTED, k.key))
+        }
+      })
+      callbackObj.addResult(new TestResult('Keywords Check', NESTED, results))
     },
     altTags: (page, callbackObj) => {
       let images = page.getElementsByTagName('img')
