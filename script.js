@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-26T16:26:14-07:00
+ * @Last modified time: 2019-03-26T16:32:28-07:00
  */
 
  // Add microformat parser to page
@@ -39,6 +39,7 @@ class TestResult {
         res.textContent = r.renderResult
         subResults.appendChild(res)
       })
+      targetDiv.appendChild(subResults)
     }
   }
 }
