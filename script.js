@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-21T15:46:47-07:00
+ * @Last modified time: 2019-03-26T15:43:10-07:00
  */
 
  // Add microformat parser to page
@@ -175,24 +175,26 @@ function keywords(html) {
       let result = ''
 
       // If there are headings, this test passes.
+      let results = []
       if (h1.length + h2.length + h3.length > 0) {
-        result.result = 'Passed! Headings: '
+        result.result = 'Headings: '
         for (h of h1) {
-          result += h.textContent + ','
+          results.push(new TestResult('H1', UNNESTED, h.textContent))
         }
         for (h of h2) {
-          result += h.textContent + ','
+          results.push(new TestResult('H2', UNNESTED, h.textContent))
         }
         for (h of h3) {
-          result += h.textContent + ','
+          results.push(new TestResult('H3', UNNESTED, h.textContent))
         }
       } else {
         result.result = 'Didn\'t pass.'
       }
-      callbackObj.addResult(new TestResult('Headings Check', UNNESTED, JSON.stringify(result)))
+      callbackObj.addResult(new TestResult('Headings Check', NESTED, results))
 
     },
     keywords: (page, callbackObj) => {
+      // TODO: Filter common words, Google Snippet Generator
       callbackObj.addResult(new TestResult('Keywords Check', UNNESTED, JSON.stringify(keywords(page))))
     },
     altTags: (page, callbackObj) => {
