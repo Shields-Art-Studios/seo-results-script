@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-26T16:32:28-07:00
+ * @Last modified time: 2019-03-26T16:41:44-07:00
  */
 
  // Add microformat parser to page
@@ -36,7 +36,7 @@ class TestResult {
       let subResults = document.createElement('ul')
       this.results.forEach(r => {
         let res = document.createElement('li')
-        res.textContent = r.renderResult
+        res.textContent = r.renderResult()
         subResults.appendChild(res)
       })
       targetDiv.appendChild(subResults)
