@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T08:55:02-07:00
+ * @Last modified time: 2019-03-27T09:00:45-07:00
  */
 
  // Add microformat parser to page
@@ -153,10 +153,7 @@ function keywords(html) {
       'key': key,
       'frequency': wordCounts[key]
     }
-  }).sort((a, b) => ((a.frequency < b.frequency) ? 1 : 0))
-
-  // Remove blank string from keyword list
-  wordsAndCounts.shift()
+  })
   return wordsAndCounts
 }
 
@@ -195,17 +192,25 @@ function keywords(html) {
     keywords: (page, callbackObj) => {
       // TODO: Filter common words, Google Snippet Generator
       let keywordList = keywords(page)
+
+      // Keyword filter. Keywords are not case sensitive.
       let badKeywords = [
         'the',
         'a',
         'it'
       ]
+      badKeywords = badKeywords.map(s => s.toLowerCase()) // Convert all keywords to lower case.
+
       let results = []
+
+      // Add results that don't match keywords
       keywordList.forEach(k => {
-        if (badKeywords.indexOf(k.key) === -1 && isNaN(k.key)) {
+        if (badKeywords.indexOf(k.key.toLowerCase()) === -1 && isNaN(k.key) && k.key.length() > 2) {
           results.push(new TestResult(k.frequency, UNNESTED, k.key))
         }
       })
+      results = results.sort((a, b) => ((a.title < b.title) ? 1 : 0)).slice(0, 10)
+
       callbackObj.addResult(new TestResult('Keywords Check', NESTED, results))
     },
     altTags: (page, callbackObj) => {
