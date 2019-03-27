@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T10:22:12-07:00
+ * @Last modified time: 2019-03-27T10:30:50-07:00
  */
 
  // Add microformat parser to page
@@ -258,7 +258,7 @@ function keywords(html) {
             new TestResult('HTTP Code', UNNESTED, results.http_code),
             new TestResult('Total Time', UNNESTED, results.total_time.toFixed(3) + ' Seconds'),
             new TestResult('Domain Name Lookup', UNNESTED, results.namelookup_time.toFixed(3) + ' Seconds'),
-            new TestResult('Download Speed', UNNESTED, results.speed_download / 100 + 'Kb/s')
+            new TestResult('Download Speed', UNNESTED, results.speed_download / 100 + ' Kb/s')
           ]))
         }
       }
@@ -301,12 +301,9 @@ function keywords(html) {
             ]))
           }
       }
-      let url = document.getElementById('URLInput').value
-      if (!url.match(/^[a-zA-Z]+:\/\//)) {
-        url = 'http://' + url;
-      }
+      let url = parseURL(document.getElementById('URLInput').value)
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(url), true)
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.hostname + url.tld), true)
       http.send()
     },
     schema: (page, callbackObj) => {
