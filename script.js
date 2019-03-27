@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T08:36:21-07:00
+ * @Last modified time: 2019-03-27T08:55:02-07:00
  */
 
  // Add microformat parser to page
@@ -148,14 +148,12 @@ function keywords(html) {
   }
 
   // Build an array of word,frequency tuples and sorts by frequency
-  // Build an array of word,frequency tuples and sorts by frequency
   let wordsAndCounts = Object.keys(wordCounts).map(key => {
     return {
       'key': key,
       'frequency': wordCounts[key]
     }
   }).sort((a, b) => ((a.frequency < b.frequency) ? 1 : 0))
-
 
   // Remove blank string from keyword list
   wordsAndCounts.shift()
@@ -200,11 +198,11 @@ function keywords(html) {
       let badKeywords = [
         'the',
         'a',
-        '1'
+        'it'
       ]
       let results = []
       keywordList.forEach(k => {
-        if (badKeywords.indexOf(k.key) === -1) {
+        if (badKeywords.indexOf(k.key) === -1 && isNaN(k.key)) {
           results.push(new TestResult(k.frequency, UNNESTED, k.key))
         }
       })
