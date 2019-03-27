@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T10:30:50-07:00
+ * @Last modified time: 2019-03-27T10:31:41-07:00
  */
 
  // Add microformat parser to page
@@ -303,7 +303,7 @@ function keywords(html) {
       }
       let url = parseURL(document.getElementById('URLInput').value)
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.hostname + url.tld), true)
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.hostname + '.' + url.tld), true)
       http.send()
     },
     schema: (page, callbackObj) => {
