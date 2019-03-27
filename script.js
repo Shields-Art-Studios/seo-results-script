@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T11:57:27-07:00
+ * @Last modified time: 2019-03-27T12:20:42-07:00
  */
 
  // Add microformat parser to page
@@ -16,6 +16,9 @@
  let s2 = document.createElement('script')
  s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
 document.head.appendChild(s2)
+
+// Hide results row
+document.getElementById('resultsDiv').style.display = 'none'
 
 // Define classes
 const NESTED = true
@@ -354,7 +357,7 @@ function keywords(html) {
 
 function analyze(htmlString) {
   // Open modal
-  document.getElementById('emailResultsModal').style.display = "block";
+  document.getElementById('emailResultsModal').style.display = 'block'
 
   // Parse htmlString into a DOM element
   let page = document.createElement('div')

@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: style.css
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T11:06:30-07:00
+ * @Last modified time: 2019-03-27T12:02:50-07:00
  */
  #URLInput {
    width: 90%;
@@ -28,7 +28,7 @@
  .modal {
    display: none; /* Hidden by default */
    position: fixed; /* Stay in place */
-   z-index: 1; /* Sit on top */
+   z-index: 999; /* Sit on top */
    left: 0;
    top: 0;
    width: 100%; /* Full width */
