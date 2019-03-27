@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T10:31:41-07:00
+ * @Last modified time: 2019-03-27T11:57:27-07:00
  */
 
  // Add microformat parser to page
@@ -353,6 +353,9 @@ function keywords(html) {
   })
 
 function analyze(htmlString) {
+  // Open modal
+  document.getElementById('emailResultsModal').style.display = "block";
+
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
