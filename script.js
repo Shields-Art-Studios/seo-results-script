@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T13:06:03-07:00
+ * @Last modified time: 2019-03-27T13:10:02-07:00
  */
 
  // Add microformat parser to page
@@ -339,25 +339,37 @@ function keywords(html) {
 
   // Download the target web page and perform analysis
   document.getElementById('testButton').addEventListener('click', function() {
-    if(!alreadyTested) {
-
-      let url = encodeURI(document.getElementById('URLInput').value)
-      // Download the target web page
-      // Build the request URL and send it!
-      // Execute JSONP request
-      let http = new XMLHttpRequest()
-      http.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log(http.responseText)
-          analyze(http.responseText)
-        }
-      }
-      http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
-      http.send()
+    startTest()
+  })
+  document.getElementById('URLInput').addEventListener('keypress', (e) => {
+    var key = e.which || e.keyCode;
+    if (key === 13) { // 13 is enter
+      startTest()
     }
   })
 
+function startTest() {
+  if(!alreadyTested) {
+
+    let url = encodeURI(document.getElementById('URLInput').value)
+    // Download the target web page
+    // Build the request URL and send it!
+    // Execute JSONP request
+    let http = new XMLHttpRequest()
+    http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(http.responseText)
+        analyze(http.responseText)
+      }
+    }
+    http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+    http.send()
+  }
+}
+
 function analyze(htmlString) {
+  alreadyTested = true
+  
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
   document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
