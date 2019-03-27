@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T10:06:48-07:00
+ * @Last modified time: 2019-03-27T10:22:12-07:00
  */
 
  // Add microformat parser to page
@@ -253,7 +253,13 @@ function keywords(html) {
       http.onreadystatechange = function() {
         console.log(http)
         if (http.readyState === 4 && this.status === 200) {
-          callbackObj.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
+          let results = JSON.parse(http.responseText)
+          callbackObj.addResult(new TestResult('Speed Test', NESTED, [
+            new TestResult('HTTP Code', UNNESTED, results.http_code),
+            new TestResult('Total Time', UNNESTED, results.total_time.toFixed(3) + ' Seconds'),
+            new TestResult('Domain Name Lookup', UNNESTED, results.namelookup_time.toFixed(3) + ' Seconds'),
+            new TestResult('Download Speed', UNNESTED, results.speed_download / 100 + 'Kb/s')
+          ]))
         }
       }
       http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('URLInput').value))
