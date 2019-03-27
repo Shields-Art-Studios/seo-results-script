@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T12:20:42-07:00
+ * @Last modified time: 2019-03-27T12:48:40-07:00
  */
 
  // Add microformat parser to page
@@ -15,7 +15,7 @@
  // Add openGraph parser to page
  let s2 = document.createElement('script')
  s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
-document.head.appendChild(s2)
+ document.head.appendChild(s2)
 
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
@@ -23,6 +23,7 @@ document.getElementById('resultsDiv').style.display = 'none'
 // Define classes
 const NESTED = true
 const UNNESTED = false
+var categoriesDone = 0 // Is incremented whenever a category is done rendering.
 
 class TestResult {
   constructor(title, resultType, results) {
@@ -83,6 +84,7 @@ class Category {
         res.renderResult(resElement)
         resList.appendChild(resElement)
       })
+      categoriesDone++ // Increment global variable
     }
   }
 }
@@ -357,7 +359,12 @@ function keywords(html) {
 
 function analyze(htmlString) {
   // Open modal
-  document.getElementById('emailResultsModal').style.display = 'block'
+  document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
+  document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
+    document.getElementById('emailResultsModal').style.display = 'none'
+    // SEND EMAIL HERE
+  })
+  document.getElementById('emailResultsModal').style.display = 'block' // Show modal
 
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
@@ -397,4 +404,12 @@ function analyze(htmlString) {
     let catFunction = categories[k].renderCategory.bind(categories[k])
     catFunction()
   })
+
+  // Display the 'show results' button when tests complete
+  let displayButtonFunction = setInterval(function() {
+    if (categoriesDone === Object.keys(categories).length) {
+      clearInterval(displayButtonFunction)
+      document.getElementById('displayResultsButton').style.display = 'block' // Show 'Show Results' button
+    }
+  }, 500)
 }
