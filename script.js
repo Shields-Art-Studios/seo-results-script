@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T09:06:36-07:00
+ * @Last modified time: 2019-03-27T09:09:47-07:00
  */
 
  // Add microformat parser to page
@@ -209,7 +209,7 @@ function keywords(html) {
           results.push(new TestResult(k.frequency, UNNESTED, k.key))
         }
       })
-      results = results.sort((a, b) => ((a.title < b.title) ? 1 : 0)).slice(0, 10)
+      results = results.sort((a, b) => ((a.title < b.title) ? 1 : 0)).slice(1, 11)
 
       callbackObj.addResult(new TestResult('Keywords Check', NESTED, results))
     },
