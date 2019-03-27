@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: style.css
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T12:02:50-07:00
+ * @Last modified time: 2019-03-27T12:59:10-07:00
  */
  #URLInput {
    width: 90%;
@@ -24,6 +24,19 @@
    border-top-right-radius: 2px;
    border-bottom-right-radius: 2px;
  }
+#displayResultsButton {
+     display: inline;
+   top: 0px;
+   width: 10%;
+   background: #69aea5;
+   color: #fff;
+   border: 0px;
+   font-size: 1em;
+   padding: .5em;
+   margin: 0px;
+   border-top-right-radius: 2px;
+   border-bottom-right-radius: 2px;
+}
  /* The Modal (background) */
  .modal {
    display: none; /* Hidden by default */
