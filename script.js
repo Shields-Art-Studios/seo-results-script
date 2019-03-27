@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T13:10:02-07:00
+ * @Last modified time: 2019-03-27T13:12:37-07:00
  */
 
  // Add microformat parser to page
@@ -349,6 +349,16 @@ function keywords(html) {
   })
 
 function startTest() {
+
+  // Open modal
+  document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
+  document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
+    document.getElementById('emailResultsModal').style.display = 'none'
+    document.getElementById('resultsDiv').style.display = 'block'
+    // SEND EMAIL HERE
+  })
+  document.getElementById('emailResultsModal').style.display = 'block' // Show modal
+
   if(!alreadyTested) {
 
     let url = encodeURI(document.getElementById('URLInput').value)
@@ -369,15 +379,6 @@ function startTest() {
 
 function analyze(htmlString) {
   alreadyTested = true
-  
-  // Open modal
-  document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
-  document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
-    document.getElementById('emailResultsModal').style.display = 'none'
-    document.getElementById('resultsDiv').style.display = 'block'
-    // SEND EMAIL HERE
-  })
-  document.getElementById('emailResultsModal').style.display = 'block' // Show modal
 
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
