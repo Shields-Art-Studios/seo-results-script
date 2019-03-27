@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T09:28:08-07:00
+ * @Last modified time: 2019-03-27T10:03:38-07:00
  */
 
  // Add microformat parser to page
@@ -295,7 +295,12 @@ function keywords(html) {
             ]))
           }
       }
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(document.getElementById('URLInput').value), true)
+      let url = document.getElementById('URLInput').value
+      if (!url.match(/^[a-zA-Z]+:\/\//)) {
+        url = 'http://' + url;
+      }
+
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI(url), true)
       http.send()
     },
     schema: (page, callbackObj) => {
