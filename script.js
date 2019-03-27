@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T10:03:38-07:00
+ * @Last modified time: 2019-03-27T10:06:48-07:00
  */
 
  // Add microformat parser to page
@@ -252,7 +252,7 @@ function keywords(html) {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         console.log(http)
-        if (http.readystate === 4 && this.status === 200) {
+        if (http.readyState === 4 && this.status === 200) {
           callbackObj.addResult(new TestResult('Speed Test', UNNESTED, http.responseText))
         }
       }
