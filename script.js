@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T09:09:47-07:00
+ * @Last modified time: 2019-03-27T09:17:05-07:00
  */
 
  // Add microformat parser to page
@@ -320,6 +320,9 @@ function keywords(html) {
 
   // Add http:// to URLInput input by default.
   document.getElementById('URLInput').value = 'http://your-web-site.com'
+  document.getElementById('URLInput').addEventListener('focusin', (e) => {
+    e.currentTarget.value = ''
+  })
 
   // Download the target web page and perform analysis
   document.getElementById('testButton').addEventListener('click', function() {
