@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T14:06:58-07:00
+ * @Last modified time: 2019-03-29T14:10:26-07:00
  */
 
  // Add microformat parser to page
@@ -471,7 +471,7 @@ function startTest() {
 }
 
 function analyze(htmlString) {
-  setCookie('url', document.getElementById('URLInput'))
+  setCookie('url', document.getElementById('URLInput').value)
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
