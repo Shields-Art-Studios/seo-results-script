@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:25:03-07:00
+ * @Last modified time: 2019-03-29T08:28:37-07:00
  */
 
  // Add microformat parser to page
@@ -57,10 +57,10 @@ class TestResult {
   }
 
   renderResult(targetDiv) {
-    if (this.resultType === UNNESTED) targetDiv.textContent = this.title + ': ' + this.results
+    if (this.resultType === UNNESTED) targetDiv.innerHTML = this.title + ': ' + this.results
     else {
       // Nested results
-      targetDiv.textContent = this.title + ':'
+      targetDiv.innerHTML = this.title + ':'
       let subResults = document.createElement('ul')
       this.results.forEach(r => {
         let res = document.createElement('li')
