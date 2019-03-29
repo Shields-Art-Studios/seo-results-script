@@ -4,7 +4,7 @@
 # @Email:  jackrwoods@gmail.com
 # @Filename: getRequestGenerator.php
 # @Last modified by:   Jack Woods
-# @Last modified time: 2019-03-29T08:38:08-07:00
+# @Last modified time: 2019-03-29T08:37:56-07:00
 
 # Perform a cross-domain GET request
 function get_web_page( $url ) {

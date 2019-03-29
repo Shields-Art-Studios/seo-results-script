@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:29:34-07:00
+ * @Last modified time: 2019-03-29T08:42:29-07:00
  */
 
  // Add microformat parser to page
@@ -245,15 +245,19 @@ function keywords(html) {
       // images with alt tags (total)
       // images without alt tags (total)
       let images = page.getElementsByTagName('img')
-      let result = 'Passed!'
+      let results = []
       for (i of images) {
         try {
-          if (i.getAttribute('alt').length === 0) result = 'Didn\'t pass!'
+          if (i.getAttribute('alt').length === 0) results.push(new TestResult('Failed Image', UNNESTED, i.outerHTML))
         } catch (e) {
           console.log(e)
         }
       }
-      callbackObj.addResult(new TestResult('Alt Tags Check', UNNESTED, JSON.stringify(result)))
+      if (results.length === 0) {
+        callbackObj.addResult(new TestResult('Alt Tags Check', UNNESTED, 'Passed!'))
+      } else {
+        callbackObj.addResult(new TestResult('Alt Tags Check', NESTED, results))
+      }
     },
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
@@ -400,6 +404,9 @@ function keywords(html) {
       })
 
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
+    },
+    siteMaps: (page, callbackObj) => {
+      https://shieldsarts.com/sitemaps.xml
     }
   }
 
