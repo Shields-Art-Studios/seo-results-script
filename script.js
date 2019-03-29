@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:39:20-07:00
+ * @Last modified time: 2019-03-29T09:45:26-07:00
  */
 
  // Add microformat parser to page
@@ -96,6 +96,7 @@ class Category {
       setTimeout(this.renderCategory.bind(this), 1000)
     } else {
       let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
+      cat.innerHTML = '' // Clear category
       // let catTitle = document.createElement('span')
       // catTitle.classList.add('categoryTitle')
       // catTitle.textContent = this.title
@@ -261,9 +262,8 @@ function keywords(html) {
     },
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
-      let host = parseURL(document.getElementById('URLInput').value).host
       for (link of page.getElementsByTagName('a')) {
-        if (parseURL(link.getAttribute('href')).host = host) num++
+        if (link.getAttribute('href').includes(document.getElementById('URLInput'))) num++
       }
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
