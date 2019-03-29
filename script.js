@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-27T13:12:37-07:00
+ * @Last modified time: 2019-03-29T07:49:14-07:00
  */
 
  // Add microformat parser to page
@@ -19,6 +19,30 @@
 
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
+
+// Helper Funtions for setting/getting cookies
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+ var d = new Date();
+ d.setTime(d.getTime() + (exdays*24*60*60*1000));
+ var expires = "expires="+ d.toUTCString();
+ document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 
 // Define classes
 const NESTED = true
@@ -163,8 +187,6 @@ function keywords(html) {
 }
 
 // Get everything set up
-  // Ensures only one website is tested per page reload
-  var alreadyTested = false
 
   // List of tests and functions
   var tests = {
@@ -219,6 +241,9 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Keywords Check', NESTED, results))
     },
     altTags: (page, callbackObj) => {
+      // Show images that don't have alt tags.
+      // images with alt tags (total)
+      // images without alt tags (total)
       let images = page.getElementsByTagName('img')
       let result = 'Passed!'
       for (i of images) {
@@ -252,6 +277,13 @@ function keywords(html) {
         if (el.getAttribute('name') == 'viewport') result = true
       }
       callbackObj.addResult(new TestResult('Has Viewport Tag', UNNESTED, result))
+    },
+    mobileFriendliness: (page, callbackObj) => {
+      let result = 'No'
+      for (el of document.getElementsByTagName('meta')) {
+        if (el.getAttribute('name') == 'viewport') result = 'Yes'
+      }
+      callbackObj.addResult(new TestResult('Is Mobile Friendly', UNNESTED, result))
     },
     speed: (page, callbackObj) => {
       let http = new XMLHttpRequest()
@@ -312,6 +344,41 @@ function keywords(html) {
       http.send()
     },
     schema: (page, callbackObj) => {
+      // Grab all script elements with attribute "type" = "application/ld+json"
+      let scripts = [] // Will hold JSON data from script objects
+      [].slice.call(page.getElementsByTagName('script')).forEach(s => {
+        try {
+          if (s.getAttribute('type') == 'application/ld+json') {
+            scripts.push(JSON.parse(s.innerHTML))
+          }
+        } catch(e) {
+          console.log(e)
+          console.log('This error was most likely caused by a script on the target page with no type attribute. It\'s okay to ignore this; it\'s just here for debugging purposes.')
+        }
+      })
+
+      // Pretty print schema data for the user.
+      let results = []
+      scripts.forEach(s => {
+        let subResults = [] // Holds result objects corresponding to json objects held within this script's top-level json-ld object, and normal result objects
+        Object.keys(s).forEach(k => { // Iterate over keys and save data
+          if (typeof(s[k]) === 'Object') {
+            let subSubResults = []
+            // Add data within a sub result to an array of results.
+            Object.keys(s[k]).forEach(k2 => {
+              subSubResults.push(new TestResult(k2, UNNESTED, s[k2]))
+            })
+            // Add the results to a nested Result object, and add that object to the higher-level array of results.
+            subResults.push(new TestResult(k, NESTED, subSubResults))
+          } else {
+            subResults.push(new TestResult(k, UNNESTED, s[k]))
+          }
+        })
+        results.push(new TestResult(s['@type'], NESTED, subResults))
+      })
+      callbackObj.addResult(new TestResult('Website Schema Check', NESTED, results))
+    },
+    microData: (page, callbackObj) => {
       // Use microfilter parser
       let data = Microformats.get({
         html: page.innerHTML
@@ -324,7 +391,7 @@ function keywords(html) {
         results.push(new TestResult('Found '+ k, UNNESTED, data.rels[k][0]))
       })
 
-      callbackObj.addResult(new TestResult('Website Schema Check', NESTED, results))
+      callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     }
   }
 
@@ -359,27 +426,22 @@ function startTest() {
   })
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
 
-  if(!alreadyTested) {
-
-    let url = encodeURI(document.getElementById('URLInput').value)
-    // Download the target web page
-    // Build the request URL and send it!
-    // Execute JSONP request
-    let http = new XMLHttpRequest()
-    http.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log(http.responseText)
-        analyze(http.responseText)
-      }
+  let url = encodeURI(document.getElementById('URLInput').value)
+  // Download the target web page
+  // Build the request URL and send it!
+  // Execute JSONP request
+  let http = new XMLHttpRequest()
+  http.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(http.responseText)
+      analyze(http.responseText)
     }
-    http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
-    http.send()
   }
+  http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+  http.send()
 }
 
 function analyze(htmlString) {
-  alreadyTested = true
-
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
@@ -391,7 +453,7 @@ function analyze(htmlString) {
       'General', // Title that renders on the page
       'generalResults', // CSS ID
       page, // Always type page just like this
-      [tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['schema']] // List the tests
+      [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema']] // List the tests
     ),
     whois: new Category(
       'Domain Registration Information',
