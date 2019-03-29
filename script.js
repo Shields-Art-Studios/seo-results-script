@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:14:44-07:00
+ * @Last modified time: 2019-03-29T08:25:03-07:00
  */
 
  // Add microformat parser to page
@@ -271,7 +271,7 @@ function keywords(html) {
         if (openGraphData[k].image !== undefined) {
           results.push(new TestResult(k, UNNESTED, openGraphData[k].title + '<br /><img src="' + openGraphData[k].image + '"></img><br />' + openGraphData[k].description))
         } else if (k = 'favicon') {
-          results.push(new TestResult(k, UNNESTED, '<img src="' + openGraphData[k] + '"></img>')
+          results.push(new TestResult(k, UNNESTED, '<img src="' + openGraphData[k] + '"></img>'))
         } else {
           results.push(new TestResult(k, UNNESTED, openGraphData[k].title + '<br />' + openGraphData[k].description))
         }
