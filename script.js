@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:18:56-07:00
+ * @Last modified time: 2019-03-29T09:22:45-07:00
  */
 
  // Add microformat parser to page
@@ -483,7 +483,7 @@ function analyze(htmlString) {
       'General', // Title that renders on the page
       'generalResults', // CSS ID
       page, // Always type page just like this
-      [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema']] // List the tests
+      [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
     ),
     whois: new Category(
       'Domain Registration Information',
