@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:44:40-07:00
+ * @Last modified time: 2019-03-29T08:47:07-07:00
  */
 
  // Add microformat parser to page
@@ -248,7 +248,7 @@ function keywords(html) {
       let results = []
       for (i of images) {
         try {
-          if (i.getAttribute('alt').length === 0) results.push(new TestResult('Failed Image', UNNESTED, i.outerHTML))
+          if (i.getAttribute('alt').length === 0) results.push(new TestResult('Failed Image', UNNESTED, i.getAttribute('src')))
         } catch (e) {
           console.log(e)
         }
