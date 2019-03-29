@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:34:43-07:00
+ * @Last modified time: 2019-03-29T09:39:20-07:00
  */
 
  // Add microformat parser to page
@@ -351,7 +351,7 @@ function keywords(html) {
       }
       let url = parseURL(document.getElementById('URLInput').value)
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.hostname + '.' + url.tld), true)
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.parent_domain), true)
       http.send()
     },
     schema: (page, callbackObj) => {
@@ -407,7 +407,7 @@ function keywords(html) {
     },
     siteMaps: (page, callbackObj) => {
       let url = parseURL(document.getElementById('URLInput').value)
-      url = encodeURI('http://' + url.hostname + '.' + url.tld + '/sitemaps.xml')
+      url = encodeURI('http://' + url.parent_domain + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
