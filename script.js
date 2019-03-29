@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T07:56:14-07:00
+ * @Last modified time: 2019-03-29T07:58:38-07:00
  */
 
  // Add microformat parser to page
@@ -349,8 +349,8 @@ function keywords(html) {
       Array.prototype.slice.call(page.getElementsByTagName('script')).forEach(s => {
         try {
           if (s.getAttribute('type') == 'application/ld+json') {
+            console.log(s)
             scripts.push(JSON.parse(s.innerHTML))
-            console.log(s.innerHTML)
           }
         } catch(e) {
           console.log(e)
