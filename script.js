@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:17:30-07:00
+ * @Last modified time: 2019-03-29T09:18:56-07:00
  */
 
  // Add microformat parser to page
@@ -406,7 +406,7 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     },
     siteMaps: (page, callbackObj) => {
-      let url = parseURL(document.getElementById('URLInput').value))
+      let url = parseURL(document.getElementById('URLInput').value)
       url = encodeURI('http://' + url.hostname + '.' + url.tld + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
