@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:47:35-07:00
+ * @Last modified time: 2019-03-29T14:06:58-07:00
  */
 
  // Add microformat parser to page
@@ -263,7 +263,7 @@ function keywords(html) {
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
       for (link of page.getElementsByTagName('a')) {
-        if (link.getAttribute('href').includes(document.getElementById('URLInput'))) num++
+        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLInput'))) num++
       }
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
