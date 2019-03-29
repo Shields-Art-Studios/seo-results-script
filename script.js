@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:42:29-07:00
+ * @Last modified time: 2019-03-29T08:44:40-07:00
  */
 
  // Add microformat parser to page
@@ -404,10 +404,11 @@ function keywords(html) {
       })
 
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
-    },
-    siteMaps: (page, callbackObj) => {
-      https://shieldsarts.com/sitemaps.xml
     }
+    // },
+    // siteMaps: (page, callbackObj) => {
+    //   //https://shieldsarts.com/sitemaps.xml
+    // }
   }
 
   // This function was taken from stackoverflow. It just encodes url strings into Base64 for use with getRequestGenerator.php
