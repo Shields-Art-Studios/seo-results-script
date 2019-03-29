@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T09:22:45-07:00
+ * @Last modified time: 2019-03-29T09:27:56-07:00
  */
 
  // Add microformat parser to page
@@ -413,7 +413,7 @@ function keywords(html) {
         if (http.readyState == 4 && http.status == 200) {
           let res = document.createElement('div')
           res.innerHTML = http.responseText
-          if (res.getElementsByTagName('body')[0].innerHTML == '200') {
+          if (http.responseText.includes('200')) {
             callback(new TestResult('Sitemaps XML Check', UNNESTED, 'Sitemap found.'))
           } else {
             callback(new TestResult('Sitemaps XML Check', UNNESTED, 'Sitemap not found!'))
