@@ -4,7 +4,8 @@
 # @Email:  jackrwoods@gmail.com
 # @Filename: getRequestGenerator.php
 # @Last modified by:   Jack Woods
-# @Last modified time: 2019-03-29T08:37:56-07:00
+# @Last modified time: 2019-03-29T08:49:57-07:00
+# Just returns the HTTP status for a GET request to a url.
 
 # Perform a cross-domain GET request
 function get_web_page( $url ) {
@@ -27,9 +28,8 @@ function get_web_page( $url ) {
     $header  = curl_getinfo( $ch );
     curl_close( $ch );
 
-    $res['content'] = $content;
-    $res['url'] = $header['url'];
-    return $res;
+    # Only return HTTP status code.
+    return $header['http_code'];
 }
 print_r(get_web_page(base64_decode($_GET['url'])));
 ?>
