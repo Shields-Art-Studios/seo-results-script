@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T08:47:07-07:00
+ * @Last modified time: 2019-03-29T09:17:30-07:00
  */
 
  // Add microformat parser to page
@@ -404,11 +404,25 @@ function keywords(html) {
       })
 
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
+    },
+    siteMaps: (page, callbackObj) => {
+      let url = parseURL(document.getElementById('URLInput').value))
+      url = encodeURI('http://' + url.hostname + '.' + url.tld + '/sitemaps.xml')
+      let http = new XMLHttpRequest()
+      http.onreadystatechange = function() {
+        if (http.readyState == 4 && http.status == 200) {
+          let res = document.createElement('div')
+          res.innerHTML = http.responseText
+          if (res.getElementsByTagName('body')[0].innerHTML == '200') {
+            callback(new TestResult('Sitemaps XML Check', UNNESTED, 'Sitemap found.'))
+          } else {
+            callback(new TestResult('Sitemaps XML Check', UNNESTED, 'Sitemap not found!'))
+          }
+        }
+      }
+      http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/existsTest.php?url=' + Base64.encode(url), true)
+      http.send()
     }
-    // },
-    // siteMaps: (page, callbackObj) => {
-    //   //https://shieldsarts.com/sitemaps.xml
-    // }
   }
 
   // This function was taken from stackoverflow. It just encodes url strings into Base64 for use with getRequestGenerator.php
