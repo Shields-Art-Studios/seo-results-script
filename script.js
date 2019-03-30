@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T18:07:50-07:00
+ * @Last modified time: 2019-03-29T18:09:51-07:00
  */
 
 // Add microformat parser to page
@@ -121,46 +121,6 @@ class Category {
 
 
 // Helper Functions for Tests
-// Parses a url for the hostname
-function parseURL(url) {
-    parsed_url = {}
-
-    if ( url == null || url.length == 0 )
-        return parsed_url
-
-    protocol_i = url.indexOf('://')
-    parsed_url.protocol = url.substr(0,protocol_i)
-
-    remaining_url = url.substr(protocol_i + 3, url.length)
-    domain_i = remaining_url.indexOf('/')
-    domain_i = domain_i == -1 ? remaining_url.length - 1 : domain_i
-    parsed_url.domain = remaining_url.substr(0, domain_i)
-    parsed_url.path = domain_i == -1 || domain_i + 1 == remaining_url.length ? null : remaining_url.substr(domain_i + 1, remaining_url.length)
-
-    domain_parts = parsed_url.domain.split('.')
-    switch ( domain_parts.length ){
-        case 2:
-          parsed_url.subdomain = null
-          parsed_url.host = domain_parts[0]
-          parsed_url.tld = domain_parts[1]
-          break
-        case 3:
-          parsed_url.subdomain = domain_parts[0]
-          parsed_url.host = domain_parts[1]
-          parsed_url.tld = domain_parts[2]
-          break
-        case 4:
-          parsed_url.subdomain = domain_parts[0]
-          parsed_url.host = domain_parts[1]
-          parsed_url.tld = domain_parts[2] + '.' + domain_parts[3]
-          break
-    }
-
-    parsed_url.parent_domain = parsed_url.host + '.' + parsed_url.tld
-
-    return parsed_url
-}
-
 // Counts word frequency and returns a list
 function keywords(html) {
   // Remove script tags and other nonsense
@@ -354,9 +314,8 @@ function keywords(html) {
             ]))
           }
       }
-      let url = parseURL(document.getElementById('URLInput').value)
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + url.parent_domain), true)
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + psl.parse(document.getElementById('URLInput').value).domain), true)
       http.send()
     },
     schema: (page, callbackObj) => {
@@ -411,8 +370,7 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     },
     siteMaps: (page, callbackObj) => {
-      let url = parseURL(document.getElementById('URLInput').value)
-      url = encodeURI('http://' + url.parent_domain + '/sitemaps.xml')
+      url = encodeURI('http://' + psl.parse(document.getElementById('URLInput').value).domain) + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
