@@ -4,18 +4,23 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T18:04:55-07:00
+ * @Last modified time: 2019-03-29T18:07:50-07:00
  */
 
- // Add microformat parser to page
- let s = document.createElement('script')
- s.src = 'https://shields-art-studios.github.io/seo-results-script/microformat-shiv.min.js'
- document.head.appendChild(s)
+// Add microformat parser to page
+let s = document.createElement('script')
+s.src = 'https://shields-art-studios.github.io/seo-results-script/microformat-shiv.min.js'
+document.head.appendChild(s)
 
- // Add openGraph parser to page
- let s2 = document.createElement('script')
- s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
- document.head.appendChild(s2)
+// Add openGraph parser to page
+let s2 = document.createElement('script')
+s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
+document.head.appendChild(s2)
+
+// Add URL parser to page
+let s3 = document.createElement('script')
+s3.src = 'https://raw.githubusercontent.com/wrangr/psl/master/dist/psl.min.js'
+document.head.appendChild(s3)
 
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
