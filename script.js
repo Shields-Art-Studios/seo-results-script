@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-30T20:25:17-07:00
+ * @Last modified time: 2019-03-30T20:29:05-07:00
  */
 
 // Add microformat parser to page
@@ -136,10 +136,7 @@ function getDomain(url, subdomain) {
 
 // Counts word frequency and returns a list
 function keywords(html) {
-  // Remove script tags and other nonsense
-  for (s of html.getElementsByTagName('script')) {
-    s.innerHTML = ''
-  }
+  // Remove nonsense
   for (s of html.getElementsByTagName('style')) {
     s.innerHTML = ''
   }
@@ -446,8 +443,8 @@ function startTest() {
 function analyze(htmlString) {
   setCookie('url', document.getElementById('URLInput').value)
   // Parse htmlString into a DOM element
-  let parser = new DOMParser
-  let page = parser.parseFromString(htmlString, 'text/html')
+  let page = document.createElement('div')
+  page.innerHTML = htmlstring
 
   // List of categories and tests
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
