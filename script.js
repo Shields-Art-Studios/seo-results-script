@@ -242,7 +242,7 @@ function keywords(sharedhtml) {
       let results = []
       for (i of images) {
         try {
-          if (i.getAttribute('alt').length === 0 && !i.getAttribute('src').includes('data:image/')) results.push(new TestResult('Failed Image', UNNESTED, i.getAttribute('src')))
+          if (i.getAttribute('alt').length === 0 && !i.getAttribute('src').includes('data:image/')) results.push(new TestResult('Failed Image', UNNESTED, '<a href="' + i.getAttribute('src') + '">' + i.getAttribute('src') + '</a>'))
         } catch (e) {
           console.log(e)
         }
