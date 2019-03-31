@@ -20,6 +20,19 @@ document.head.appendChild(s2)
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
 
+// Add email functionality to modal
+document.getElementById('emailToggle').addEventListener('change', (e) => {
+  if (e.currentTarget.checked) {
+    document.getElementById('nameEntry').style.display = 'block'
+    document.getElementById('emailEntry').style.display = 'block'
+    document.getElementById('telephoneEntry').style.display = 'block'
+  } else {
+    document.getElementById('nameEntry').style.display = 'none'
+    document.getElementById('emailEntry').style.display = 'none'
+    document.getElementById('telephoneEntry').style.display = 'none'
+  }
+})
+
 // Helper Funtions for setting/getting cookies
 function getCookie(cname) {
   var name = cname + "=";
@@ -424,6 +437,24 @@ function startTest() {
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
   document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
+    if (e.currentTarget.checked) {
+      if (document.getElementById('nameEntry').value.length === 0 || document.getElementById('emailEntry').value.length === 0) {
+        alert('Please enter your name and email address, or uncheck "Email My Results".')
+      } else {
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log(http.responseText)
+          }
+        }
+        http.open('POST', 'https://dev.shieldsarts.com/seo-report-scripts/sendEmail.php', true)
+        http.send(JSON.stringify({
+          email: document.getElementById('emailEntry'),
+          message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>',
+          message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>'
+        }))
+      }
+    }
     document.getElementById('emailResultsModal').style.display = 'none'
     document.getElementById('resultsDiv').style.display = 'block'
     // SEND EMAIL HERE
