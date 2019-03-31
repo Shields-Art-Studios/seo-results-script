@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-30T20:29:05-07:00
+ * @Last modified time: 2019-03-30T20:30:47-07:00
  */
 
 // Add microformat parser to page
@@ -444,7 +444,7 @@ function analyze(htmlString) {
   setCookie('url', document.getElementById('URLInput').value)
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
-  page.innerHTML = htmlstring
+  page.innerHTML = htmlString
 
   // List of categories and tests
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
