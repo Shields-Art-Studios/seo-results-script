@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-30T20:22:39-07:00
+ * @Last modified time: 2019-03-30T20:25:17-07:00
  */
 
 // Add microformat parser to page
@@ -89,7 +89,6 @@ class Category {
   }
 
   renderCategory() {
-    console.log(this)
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
       console.log('waiting...' + this.testResults.length + ',' + this.resultsNeeded)
@@ -278,7 +277,6 @@ function keywords(html) {
     speed: (page, callbackObj) => {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
-        console.log(http)
         if (http.readyState === 4 && this.status === 200) {
           let results = JSON.parse(http.responseText)
           callbackObj.addResult(new TestResult('Speed Test', NESTED, [
@@ -299,7 +297,6 @@ function keywords(html) {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
              let response = JSON.parse(http.responseText)
-             console.log(response)
              callbackObj.addResult(new TestResult('Whois Information', NESTED,
                [
                  new TestResult('Domain', UNNESTED, response.name),
@@ -344,7 +341,6 @@ function keywords(html) {
           }
         } catch(e) {
           console.log(e)
-          console.log('This error was most likely caused by a script on the target page with no type attribute. It\'s okay to ignore this; it\'s just here for debugging purposes.')
         }
       })
 
@@ -389,7 +385,6 @@ function keywords(html) {
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
-          console.log(http.responseText)
           if (http.responseText.includes('200')) {
             callbackObj.addResult(new TestResult('Sitemaps XML Check', UNNESTED, 'Sitemap found.'))
           } else {
