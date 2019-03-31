@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-30T20:32:56-07:00
+ * @Last modified time: 2019-03-30T20:37:28-07:00
  */
 
 // Add microformat parser to page
@@ -135,8 +135,13 @@ function getDomain(url, subdomain) {
 }
 
 // Counts word frequency and returns a list
-function keywords(html) {
-  // Remove nonsense
+function keywords(sharedhtml) {
+  // Remove scripts and other nonsense without editing the shared dom element
+  let html = document.createElement('div')
+  html.innerHTML = sharedhtml.outerHTML
+  for (s of html.getElementsByTagName('script')) {
+    s.innerHTML = ''
+  }
   for (s of html.getElementsByTagName('style')) {
     s.innerHTML = ''
   }
