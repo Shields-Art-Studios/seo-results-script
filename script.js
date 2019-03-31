@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-03-29T18:12:39-07:00
+ * @Last modified time: 2019-03-30T20:04:22-07:00
  */
 
 // Add microformat parser to page
@@ -16,11 +16,6 @@ document.head.appendChild(s)
 let s2 = document.createElement('script')
 s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
 document.head.appendChild(s2)
-
-// Add URL parser to page
-let s3 = document.createElement('script')
-s3.src = 'https://raw.githubusercontent.com/wrangr/psl/master/dist/psl.min.js'
-document.head.appendChild(s3)
 
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
@@ -121,6 +116,25 @@ class Category {
 
 
 // Helper Functions for Tests
+// Retrieves domain name from sring
+function getDomain(url, subdomain) {
+    subdomain = subdomain || false
+
+    url = url.replace(/(https?:\/\/)?(www.)?/i, '')
+
+    if (!subdomain) {
+        url = url.split('.')
+
+        url = url.slice(url.length - 2).join('.')
+    }
+
+    if (url.indexOf('/') !== -1) {
+        return url.split('/')[0]
+    }
+
+    return url
+}
+
 // Counts word frequency and returns a list
 function keywords(html) {
   // Remove script tags and other nonsense
@@ -315,7 +329,7 @@ function keywords(html) {
           }
       }
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + psl.get(document.getElementById('URLInput').value), true))
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + getDomain(document.getElementById('URLInput').value), true))
       http.send()
     },
     schema: (page, callbackObj) => {
@@ -370,7 +384,7 @@ function keywords(html) {
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     },
     siteMaps: (page, callbackObj) => {
-      url = encodeURI('http://' + psl.get(document.getElementById('URLInput').value) + '/sitemaps.xml')
+      url = encodeURI('http://' + getDomain(document.getElementById('URLInput').value) + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
