@@ -101,6 +101,11 @@ class Category {
     this.testResults.push(result)
   }
 
+  clearCategory() {
+    let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
+    cat.innerHTML = '' // Clear category
+  }
+
   renderCategory() {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
@@ -124,6 +129,35 @@ class Category {
       categoriesDone++ // Increment global variable
     }
   }
+}
+
+// List of categories and tests
+// Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
+var categories = {
+  general: new Category(
+    'General', // Title that renders on the page
+    'generalResults', // CSS ID
+    page, // Always type page just like this
+    [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
+  ),
+  whois: new Category(
+    'Domain Registration Information',
+    'whoisResults',
+    page,
+    [tests['whois']]
+  ),
+  speed: new Category(
+    'Speed Tests',
+    'speedResults',
+    page,
+    [tests['speed']]
+  ),
+  social: new Category(
+    'Social Media',
+    'socialResults',
+    page,
+    [tests['socialMediaLikes'], tests['openGraph']]
+  )
 }
 
 
@@ -434,6 +468,12 @@ function keywords(sharedhtml) {
 
 function startTest() {
 
+  // Execute each test
+  Object.keys(categories).forEach(function(k) {
+    let catFunction = categories[k].clearCategory.bind(categories[k])
+    catFunction()
+  })
+
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
   document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
@@ -481,35 +521,6 @@ function analyze(htmlString) {
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
-
-  // List of categories and tests
-  // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
-  var categories = {
-    general: new Category(
-      'General', // Title that renders on the page
-      'generalResults', // CSS ID
-      page, // Always type page just like this
-      [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
-    ),
-    whois: new Category(
-      'Domain Registration Information',
-      'whoisResults',
-      page,
-      [tests['whois']]
-    ),
-    speed: new Category(
-      'Speed Tests',
-      'speedResults',
-      page,
-      [tests['speed']]
-    ),
-    social: new Category(
-      'Social Media',
-      'socialResults',
-      page,
-      [tests['socialMediaLikes'], tests['openGraph']]
-    )
-  }
 
   // Execute each test
   Object.keys(categories).forEach(function(k) {
