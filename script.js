@@ -368,12 +368,12 @@ function keywords(sharedhtml) {
             let subSubResults = []
             // Add data within a sub result to an array of results.
             Object.keys(s[k]).forEach(k2 => {
-              subSubResults.push(new TestResult(k2, UNNESTED, s[k2]))
+              subSubResults.push(new TestResult(k2, UNNESTED, JSON.stringify(s[k2])))
             })
             // Add the results to a nested Result object, and add that object to the higher-level array of results.
             subResults.push(new TestResult(k, NESTED, subSubResults))
           } else {
-            subResults.push(new TestResult(k, UNNESTED, s[k]))
+            subResults.push(new TestResult(k, UNNESTED, JSON.stringify(s[k])))
           }
         })
         results.push(new TestResult(s['@type'], NESTED, subResults))
