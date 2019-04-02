@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T06:44:31-07:00
+ * @Last modified time: 2019-04-02T06:54:02-07:00
  */
 
 // Add microformat parser to page
@@ -449,11 +449,13 @@ function startTest() {
           }
         }
         http.open('POST', 'https://dev.shieldsarts.com/seo-report-scripts/sendEmail.php', true)
-        http.send(JSON.stringify({
-          email: document.getElementById('emailEntry'),
-          message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>',
-          message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>'
-        }))
+        let obj = {
+        email: document.getElementById('emailEntry'),
+        message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>',
+        message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>'
+      }
+        http.send(Object.keys(obj).filter(k => obj.hasOwnProperty(k)).map(
+        k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&'))
       }
     }
     document.getElementById('emailResultsModal').style.display = 'none'
