@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T06:54:02-07:00
+ * @Last modified time: 2019-04-02T06:58:47-07:00
  */
 
 // Add microformat parser to page
@@ -430,6 +430,11 @@ function keywords(sharedhtml) {
       startTest()
     }
   })
+
+document.getElementById('sendResultsButton').addEventListener('click', (e) => {
+  document.getElementById('resultsDiv').style.display = 'none'
+  document.getElementById('emailResultsModal').style.display = 'block' // Show modal
+})
 
 function startTest() {
 
