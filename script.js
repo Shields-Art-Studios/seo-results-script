@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T06:58:47-07:00
+ * @Last modified time: 2019-04-02T07:05:03-07:00
  */
 
 // Add microformat parser to page
@@ -32,6 +32,18 @@ document.getElementById('emailToggle').addEventListener('change', (e) => {
     document.getElementById('telephoneEntry').style.display = 'none'
   }
 })
+
+// Gets url parameters from the current window object
+function getUrlVars() {
+    var vars = {}
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value
+    })
+    return vars
+}
+// If this page was linked to with a url, just start the test immediately.
+let urlParams = getUrlVars()
+if (urlParams[url] !== undefined) startTest(Base64.decode(urlParams[url]))
 
 // Helper Funtions for setting/getting cookies
 function getCookie(cname) {
@@ -427,7 +439,7 @@ function keywords(sharedhtml) {
   document.getElementById('URLInput').addEventListener('keypress', (e) => {
     var key = e.which || e.keyCode;
     if (key === 13) { // 13 is enter
-      startTest()
+      startTest(document.getElementById('URLInput'))
     }
   })
 
@@ -436,7 +448,7 @@ document.getElementById('sendResultsButton').addEventListener('click', (e) => {
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
 })
 
-function startTest() {
+function startTest(url) {
 
   document.getElementById('resultsDiv').style.display = 'none'
 
@@ -456,7 +468,7 @@ function startTest() {
         http.open('POST', 'https://dev.shieldsarts.com/seo-report-scripts/sendEmail.php', true)
         let obj = {
         email: document.getElementById('emailEntry'),
-        message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>',
+        message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>',
         message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>'
       }
         http.send(Object.keys(obj).filter(k => obj.hasOwnProperty(k)).map(
