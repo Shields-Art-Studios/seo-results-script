@@ -20,6 +20,19 @@ document.head.appendChild(s2)
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
 
+// Add email functionality to modal
+document.getElementById('emailToggle').addEventListener('change', (e) => {
+  if (e.currentTarget.checked) {
+    document.getElementById('nameEntry').style.display = 'block'
+    document.getElementById('emailEntry').style.display = 'block'
+    document.getElementById('telephoneEntry').style.display = 'block'
+  } else {
+    document.getElementById('nameEntry').style.display = 'none'
+    document.getElementById('emailEntry').style.display = 'none'
+    document.getElementById('telephoneEntry').style.display = 'none'
+  }
+})
+
 // Helper Funtions for setting/getting cookies
 function getCookie(cname) {
   var name = cname + "=";
@@ -88,6 +101,11 @@ class Category {
     this.testResults.push(result)
   }
 
+  clearCategory() {
+    let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
+    cat.innerHTML = '' // Clear category
+  }
+
   renderCategory() {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
@@ -111,6 +129,35 @@ class Category {
       categoriesDone++ // Increment global variable
     }
   }
+}
+
+// List of categories and tests
+// Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
+var categories = {
+  general: new Category(
+    'General', // Title that renders on the page
+    'generalResults', // CSS ID
+    page, // Always type page just like this
+    [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
+  ),
+  whois: new Category(
+    'Domain Registration Information',
+    'whoisResults',
+    page,
+    [tests['whois']]
+  ),
+  speed: new Category(
+    'Speed Tests',
+    'speedResults',
+    page,
+    [tests['speed']]
+  ),
+  social: new Category(
+    'Social Media',
+    'socialResults',
+    page,
+    [tests['socialMediaLikes'], tests['openGraph']]
+  )
 }
 
 
@@ -229,7 +276,7 @@ function keywords(sharedhtml) {
       let results = []
       for (i of images) {
         try {
-          if (i.getAttribute('alt').length === 0 && !i.getAttribute('src').includes('data:image/')) results.push(new TestResult('Failed Image', UNNESTED, i.getAttribute('src')))
+          if (i.getAttribute('alt').length === 0 && !i.getAttribute('src').includes('data:image/')) results.push(new TestResult('Failed Image', UNNESTED, '<a href="' + i.getAttribute('src') + '">' + i.getAttribute('src') + '</a>'))
         } catch (e) {
           console.log(e)
         }
@@ -243,7 +290,7 @@ function keywords(sharedhtml) {
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
       for (link of page.getElementsByTagName('a')) {
-        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLInput'))) num++
+        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLInput').value)) num++
       }
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
@@ -355,12 +402,12 @@ function keywords(sharedhtml) {
             let subSubResults = []
             // Add data within a sub result to an array of results.
             Object.keys(s[k]).forEach(k2 => {
-              subSubResults.push(new TestResult(k2, UNNESTED, s[k2]))
+              subSubResults.push(new TestResult(k2, UNNESTED, JSON.stringify(s[k2])))
             })
             // Add the results to a nested Result object, and add that object to the higher-level array of results.
             subResults.push(new TestResult(k, NESTED, subSubResults))
           } else {
-            subResults.push(new TestResult(k, UNNESTED, s[k]))
+            subResults.push(new TestResult(k, UNNESTED, JSON.stringify(s[k])))
           }
         })
         results.push(new TestResult(s['@type'], NESTED, subResults))
@@ -421,9 +468,33 @@ function keywords(sharedhtml) {
 
 function startTest() {
 
+  // Execute each test
+  Object.keys(categories).forEach(function(k) {
+    let catFunction = categories[k].clearCategory.bind(categories[k])
+    catFunction()
+  })
+
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
   document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
+    if (e.currentTarget.checked) {
+      if (document.getElementById('nameEntry').value.length === 0 || document.getElementById('emailEntry').value.length === 0) {
+        alert('Please enter your name and email address, or uncheck "Email My Results".')
+      } else {
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log(http.responseText)
+          }
+        }
+        http.open('POST', 'https://dev.shieldsarts.com/seo-report-scripts/sendEmail.php', true)
+        http.send(JSON.stringify({
+          email: document.getElementById('emailEntry'),
+          message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>',
+          message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput')) + '">Your Results</a>'
+        }))
+      }
+    }
     document.getElementById('emailResultsModal').style.display = 'none'
     document.getElementById('resultsDiv').style.display = 'block'
     // SEND EMAIL HERE
@@ -450,35 +521,6 @@ function analyze(htmlString) {
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
-
-  // List of categories and tests
-  // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
-  var categories = {
-    general: new Category(
-      'General', // Title that renders on the page
-      'generalResults', // CSS ID
-      page, // Always type page just like this
-      [tests['mobileFriendliness'], tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
-    ),
-    whois: new Category(
-      'Domain Registration Information',
-      'whoisResults',
-      page,
-      [tests['whois']]
-    ),
-    speed: new Category(
-      'Speed Tests',
-      'speedResults',
-      page,
-      [tests['speed']]
-    ),
-    social: new Category(
-      'Social Media',
-      'socialResults',
-      page,
-      [tests['socialMediaLikes'], tests['openGraph']]
-    )
-  }
 
   // Execute each test
   Object.keys(categories).forEach(function(k) {

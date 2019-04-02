@@ -9,17 +9,22 @@
 
 # Get email data from POST url encoded body
 
-$to = urldecode($_POST["email"];
+$to = $_POST["email"];
 $subject = "SEO Report";
-$txt = urldecode($_POST["message"]);
+$txt = $_POST["message"];
 $headers = "From: gabriel@shieldsarts.com\r\n";
-
+$headers .= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 mail($to,$subject,$txt,$headers);
 
 $to2 = "gabriel@shieldsarts.com";
 $subject2 = "New Lead - SEO Report";
-$txt2 = urldecode($_POST["message"]);
+$txt2 = $_POST["message2"].$_POST["message"];
 $headers2 = "From: gabriel@shieldsarts.com\r\n";
+$headers2 .= "MIME-Version: 1.0\r\n";
+$headers2 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 mail($to2,$subject2,$txt2,$headers2);
+
+print_r("Sent!");
 ?>
