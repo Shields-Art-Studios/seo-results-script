@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T17:30:42-07:00
+ * @Last modified time: 2019-04-02T17:32:50-07:00
  */
 
 // Add microformat parser to page
@@ -43,7 +43,7 @@ function getUrlVars() {
 }
 // If this page was linked to with a url, just start the test immediately.
 let urlParams = getUrlVars()
-if (urlParams[url] !== undefined) startTest(Base64.decode(urlParams[url]))
+if (urlParams['url'] !== undefined) startTest(Base64.decode(urlParams[url]))
 
 // Helper Funtions for setting/getting cookies
 function getCookie(cname) {
