@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T17:55:35-07:00
+ * @Last modified time: 2019-04-02T18:00:18-07:00
  */
 
 // Add microformat parser to page
@@ -43,7 +43,6 @@ function getUrlVars() {
 }
 // If this page was linked to with a url, just start the test immediately.
 let urlParams = getUrlVars()
-console.log(urlParams['url'])
 if (urlParams['url'] !== undefined) startTest(Base64.decode(urlParams['url']))
 
 // Helper Funtions for setting/getting cookies
@@ -117,7 +116,6 @@ class Category {
   renderCategory() {
     if (this.testResults.length < this.resultsNeeded) {
       // Wait 500ms for requests/tests to finish
-      console.log('waiting...' + this.testResults.length + ',' + this.resultsNeeded)
       setTimeout(this.renderCategory.bind(this), 1000)
     } else {
       let cat = document.getElementById(this.id) // Find the category on the page by searching for the category's CSS ID
@@ -358,12 +356,10 @@ function keywords(sharedhtml) {
     },
     schema: (page, callbackObj) => {
       // Grab all script elements with attribute "type" = "application/ld+json"
-      console.log(page.innerHTML)
       let scripts = [] // Will hold JSON data from script objects
       Array.prototype.slice.call(page.getElementsByTagName('script')).forEach(s => {
         try {
           if (s.getAttribute('type') == 'application/ld+json') {
-            console.log(s.innerHTML)
             scripts.push(JSON.parse(s.innerHTML))
           }
         } catch(e) {
@@ -487,7 +483,6 @@ function startTest(url) {
   let http = new XMLHttpRequest()
   http.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(http.responseText)
       analyze(http.responseText)
     }
   }
