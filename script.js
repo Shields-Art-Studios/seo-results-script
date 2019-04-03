@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T07:05:03-07:00
+ * @Last modified time: 2019-04-02T17:30:42-07:00
  */
 
 // Add microformat parser to page
@@ -480,8 +480,6 @@ function startTest(url) {
     // SEND EMAIL HERE
   })
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
-
-  let url = encodeURI(document.getElementById('URLInput').value)
   // Download the target web page
   // Build the request URL and send it!
   // Execute JSONP request
