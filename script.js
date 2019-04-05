@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-02T18:09:01-07:00
+ * @Last modified time: 2019-04-05T06:54:05-07:00
  */
 
 // Add microformat parser to page
@@ -17,23 +17,21 @@ let s2 = document.createElement('script')
 s2.src = 'https://shields-art-studios.github.io/seo-results-script/opengraph.js'
 document.head.appendChild(s2)
 
+// Add smtpjs for emails
+let s3 = document.createElement('script')
+s3.src = 'https://smtpjs.com/v3/smtp.js'
+document.head.appendChild(s3)
+
 // This function was taken from stackoverflow. It just encodes url strings into Base64 for use with getRequestGenerator.php
 var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
 
 // Hide results row
 document.getElementById('resultsDiv').style.display = 'none'
 
-// Add email functionality to modal
-document.getElementById('emailToggle').addEventListener('change', (e) => {
-  if (e.currentTarget.checked) {
-    document.getElementById('nameEntry').style.display = 'block'
-    document.getElementById('emailEntry').style.display = 'block'
-    document.getElementById('telephoneEntry').style.display = 'block'
-  } else {
-    document.getElementById('nameEntry').style.display = 'none'
-    document.getElementById('emailEntry').style.display = 'none'
-    document.getElementById('telephoneEntry').style.display = 'none'
-  }
+// Toggle phone entry in modal
+document.getElementById('phoneToggle').addEventListener('change', (e) => {
+  if (e.currentTarget.checked) document.getElementById('phoneEntry').style.display = 'inline-block'
+  else document.getElementById('phoneEntry').style.display = 'none'
 })
 
 // Gets url parameters from the current window object
@@ -452,26 +450,34 @@ function startTest(url) {
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
   document.getElementById('displayResultsButton').addEventListener('click', (e) => { // Allow show results button to close modal
-    if (e.currentTarget.checked) {
-      if (document.getElementById('nameEntry').value.length === 0 || document.getElementById('emailEntry').value.length === 0) {
-        alert('Please enter your name and email address, or uncheck "Email My Results".')
-      } else {
-        let http = new XMLHttpRequest()
-        http.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log(http.responseText)
-          }
-        }
-        http.open('POST', 'https://dev.shieldsarts.com/seo-report-scripts/sendEmail.php', true)
-        let obj = {
-        name: document.getElementById('nameEntry').value,
-        email: document.getElementById('emailEntry').value,
-        message: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>',
-        message2: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
-      }
-        http.send(Object.keys(obj).filter(k => obj.hasOwnProperty(k)).map(
-        k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&'))
-      }
+
+    if (document.getElementById('emailToggle').checked && document.getElementById('emailEntry').value.length === 0) {
+      alert('Please enter your email address, or uncheck "Email My Results".')
+    } else {
+
+      // Send an email to the client.
+      Email.send({
+        SecureToken: '3fd0c3dc-5578-4f94-9bba-f73c72d2acf6',
+        To: document.getElementById('emailEntry').value,
+        From: 'gabriel@shieldsarts.com',
+        Subject: 'Your SEO Report',
+        Body: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
+      }).then(
+        message => alert(message)
+      )
+
+      // Send an email to Gabriel
+      Email.send({
+        SecureToken: '3fd0c3dc-5578-4f94-9bba-f73c72d2acf6',
+        To: 'gabriel@shieldsarts.com',
+        From: 'gabriel@shieldsarts.com',
+        Subject: 'Your SEO Report',
+        Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
+        'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
+        'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
+      }).then(
+        message => alert(message)
+      )
     }
     document.getElementById('emailResultsModal').style.display = 'none'
     document.getElementById('resultsDiv').style.display = 'block'
@@ -480,7 +486,6 @@ function startTest(url) {
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
   // Download the target web page
   // Build the request URL and send it!
-  // Execute JSONP request
   let http = new XMLHttpRequest()
   http.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
