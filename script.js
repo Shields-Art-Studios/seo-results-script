@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-05T06:54:05-07:00
+ * @Last modified time: 2019-04-05T06:56:33-07:00
  */
 
 // Add microformat parser to page
@@ -461,7 +461,7 @@ function startTest(url) {
         To: document.getElementById('emailEntry').value,
         From: 'gabriel@shieldsarts.com',
         Subject: 'Your SEO Report',
-        Body: 'Hello ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
+        Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
       }).then(
         message => alert(message)
       )
@@ -474,7 +474,7 @@ function startTest(url) {
         Subject: 'Your SEO Report',
         Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
         'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
-        'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementsById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
+        'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
       }).then(
         message => alert(message)
       )
