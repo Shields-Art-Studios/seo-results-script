@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-07T14:03:42-07:00
+ * @Last modified time: 2019-04-07T14:17:13-07:00
  */
 
 // Add microformat parser to page
@@ -416,7 +416,7 @@ function keywords(sharedhtml) {
           }
         }
       }
-      http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/existsTest.php?url=' + Base64.encode(url), true)
+      http.open('GET', 'https://shieldsarts.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
       http.send()
     }
   }
@@ -492,7 +492,7 @@ function startTest(url) {
       analyze(http.responseText)
     }
   }
-  http.open('GET', 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+  http.open('GET', 'https://shieldsarts.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
   http.send()
 }
 
