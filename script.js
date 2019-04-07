@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-05T06:56:33-07:00
+ * @Last modified time: 2019-04-07T14:03:42-07:00
  */
 
 // Add microformat parser to page
@@ -457,7 +457,7 @@ function startTest(url) {
 
       // Send an email to the client.
       Email.send({
-        SecureToken: '3fd0c3dc-5578-4f94-9bba-f73c72d2acf6',
+        SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
         To: document.getElementById('emailEntry').value,
         From: 'gabriel@shieldsarts.com',
         Subject: 'Your SEO Report',
@@ -468,7 +468,7 @@ function startTest(url) {
 
       // Send an email to Gabriel
       Email.send({
-        SecureToken: '3fd0c3dc-5578-4f94-9bba-f73c72d2acf6',
+        SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
         To: 'gabriel@shieldsarts.com',
         From: 'gabriel@shieldsarts.com',
         Subject: 'Your SEO Report',
