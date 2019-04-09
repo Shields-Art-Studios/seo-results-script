@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:34:18-07:00
+ * @Last modified time: 2019-04-08T18:35:44-07:00
  */
 
 // Add microformat parser to page
@@ -234,7 +234,7 @@ function keywords(sharedhtml) {
 
       // Add results that don't match keywords
       keywordList.forEach(k => {
-        if (badKeywords.indexOf(k.key.toLowerCase()) === -1 && isNaN(k.key) && k.key.length > 2 &&) {
+        if (badKeywords.indexOf(k.key.toLowerCase()) === -1 && isNaN(k.key) && k.key.length > 2) {
           results.push(new TestResult(k.key, UNNESTED, k.frequency))
         }
       })
