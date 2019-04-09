@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T17:47:24-07:00
+ * @Last modified time: 2019-04-08T17:49:31-07:00
  */
 
 // Add microformat parser to page
@@ -462,29 +462,31 @@ function startTest(url) {
       document.getElementById('emailResultsModal').style.display = 'none'
       document.getElementById('resultsDiv').style.display = 'block'
 
-      // Send an email to the client.
-      Email.send({
-        SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
-        To: document.getElementById('emailEntry').value,
-        From: 'gabriel@shieldsarts.com',
-        Subject: 'Your SEO Report',
-        Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
-      }).then(
-        message => alert(message)
-      )
+      if (document.getElementById('emailToggle').checked || document.getElementById('emailEntry').value.length !== 0) {
+        // Send an email to the client.
+        Email.send({
+          SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
+          To: document.getElementById('emailEntry').value,
+          From: 'gabriel@shieldsarts.com',
+          Subject: 'Your SEO Report',
+          Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
+        }).then(
+          message => alert(message)
+        )
 
-      // Send an email to Gabriel
-      Email.send({
-        SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
-        To: 'gabriel@shieldsarts.com',
-        From: 'gabriel@shieldsarts.com',
-        Subject: 'Your SEO Report',
-        Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
-        'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
-        'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
-      }).then(
-        message => alert(message)
-      )
+        // Send an email to Gabriel
+        Email.send({
+          SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
+          To: 'gabriel@shieldsarts.com',
+          From: 'gabriel@shieldsarts.com',
+          Subject: 'Your SEO Report',
+          Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
+          'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
+          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
+        }).then(
+          message => alert(message)
+        )
+      }
     }
   })
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
