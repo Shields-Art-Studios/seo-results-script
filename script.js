@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T17:52:45-07:00
+ * @Last modified time: 2019-04-08T18:02:20-07:00
  */
 
 // Add microformat parser to page
@@ -324,21 +324,16 @@ function keywords(sharedhtml) {
           if (this.readyState == 4 && this.status == 200) {
              // Typical action to be performed when the document is ready:
              let response = JSON.parse(http.responseText)
-             try {
-               callbackObj.addResult(new TestResult('Whois Information', NESTED,
-                 [
-                   new TestResult('Domain', UNNESTED, response.name),
-                   new TestResult('Admin', UNNESTED, response.contacts.admin[0].name),
-                   new TestResult('Owner', UNNESTED, response.contacts.admin[0].name),
-                   new TestResult('Date Created', UNNESTED, response.created),
-                   new TestResult('Date Expires', UNNESTED, response.expires),
-                   new TestResult('Nameservers', UNNESTED, JSON.stringify(response.nameservers)),
-                   new TestResult('Registrar', UNNESTED, response.registrar.name)
-                 ]
-               ))
-             } catch(e) {
-               callbackObj.addResult(new TestResult('Whois Information', UNNESTED, 'Error'))
-             }
+
+             let results = []
+
+             try { results.push(new TestResult('Domain', UNNESTED, response.name)) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Admin', UNNESTED, response.contacts.admin[0].name)) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Owner', UNNESTED, response.contacts.admin[0].name)) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Date Created', UNNESTED, response.created)) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Date Expires', UNNESTED, response.expires)) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Nameservers', UNNESTED, JSON.stringify(response.nameservers))) } catch(e) { console.log(e) }
+             try { results.push(new TestResult('Registrar', UNNESTED, response.registrar.name)) } catch(e) { console.log(e) }
           }
       }
       http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('URLInput').value), true)
