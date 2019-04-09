@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:09:07-07:00
+ * @Last modified time: 2019-04-08T18:10:33-07:00
  */
 
 // Add microformat parser to page
@@ -530,7 +530,7 @@ function analyze(htmlString) {
     ),
     mobile: new Category(
       'Mobile',
-      'mobileResults',
+      'mobileResult',
       page,
       [tests['mobileFriendliness']]
     )
