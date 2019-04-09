@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:11:54-07:00
+ * @Last modified time: 2019-04-08T18:21:34-07:00
  */
 
 // Add microformat parser to page
@@ -334,6 +334,8 @@ function keywords(sharedhtml) {
              try { results.push(new TestResult('Date Expires', UNNESTED, response.expires)) } catch(e) { console.log(e) }
              try { results.push(new TestResult('Nameservers', UNNESTED, JSON.stringify(response.nameservers))) } catch(e) { console.log(e) }
              try { results.push(new TestResult('Registrar', UNNESTED, response.registrar.name)) } catch(e) { console.log(e) }
+
+             callbackObj.addResult(new TestResult('Whois Information', NESTED, results)
           }
       }
       http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('URLInput').value), true)
