@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:21:34-07:00
+ * @Last modified time: 2019-04-08T18:24:17-07:00
  */
 
 // Add microformat parser to page
@@ -401,8 +401,12 @@ function keywords(sharedhtml) {
         results.push(new TestResult('Found', UNNESTED, i.type[0]))
       })
       Object.keys(data.rels).forEach(k => {
-        let string = data.rels[k][0].length > 47 ? data.rels[k][0].substring(0,47) + '...' : data.rels[k][0]
-        results.push(new TestResult('Found '+ k, UNNESTED, string))
+        try{
+          let string = data.rels[k][0].length > 47 ? data.rels[k][0].substring(0,47) + '...' : data.rels[k][0]
+          results.push(new TestResult('Found '+ k, UNNESTED, string))
+        } catch(e) {
+          console.log(e)
+        }
       })
 
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
