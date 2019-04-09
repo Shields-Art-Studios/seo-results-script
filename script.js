@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-07T14:17:13-07:00
+ * @Last modified time: 2019-04-08T17:29:24-07:00
  */
 
 // Add microformat parser to page
@@ -455,6 +455,9 @@ function startTest(url) {
       alert('Please enter your email address, or uncheck "Email My Results".')
     } else {
 
+      document.getElementById('emailResultsModal').style.display = 'none'
+      document.getElementById('resultsDiv').style.display = 'block'
+
       // Send an email to the client.
       Email.send({
         SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
@@ -479,9 +482,6 @@ function startTest(url) {
         message => alert(message)
       )
     }
-    document.getElementById('emailResultsModal').style.display = 'none'
-    document.getElementById('resultsDiv').style.display = 'block'
-    // SEND EMAIL HERE
   })
   document.getElementById('emailResultsModal').style.display = 'block' // Show modal
   // Download the target web page
