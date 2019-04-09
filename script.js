@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:07:50-07:00
+ * @Last modified time: 2019-04-08T18:08:20-07:00
  */
 
 // Add microformat parser to page
@@ -531,7 +531,7 @@ function analyze(htmlString) {
       'socialResults',
       page,
       [tests['socialMediaLikes'], tests['openGraph']]
-    )
+    ),
     mobile: new Category(
       'Mobile',
       'mobileResults',
