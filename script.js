@@ -504,50 +504,85 @@ function analyze(htmlString) {
   // List of categories and tests
   // Each category should have 3 variables: a title, a css id corresponding to its results div, and a list of test names that correspond to functions in tests.js
   var categories = {
-    general: new Category(
-      'General', // Title that renders on the page
-      'generalResults', // CSS ID
+    sitemap: new Category(
+      'Sitemap', // Title that renders on the page
+      'sitemapResults', // CSS ID
       page, // Always type page just like this
-      [tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
+      [tests['siteMaps']] // List the tests
     ),
-    header: new Category(
-      'Domain Registration Information',
+     header: new Category(
+      'Header Tags',
       'headerResults',
       page,
       [tests['headings']]
     ),
-    whois: new Category(
+     keywords: new Category(
+      'Keyword',
+      'keywordResults',
+      page,
+      [tests['keywords']]
+    ),
+     altag: new Category(
+      'Alt Tags',
+      'altResults',
+      page,
+      [tests['altTags']]
+    ),
+     linkcount: new Category(
+      'Link Count',
+      'linkResults',
+      page,
+      [tests['linksWithinDomainName']]
+    ),    
+     viewport: new Category(
+      'ViewPort',
+      'viewResults',
+      page,
+      [tests['viewport']]
+    ),    
+     microdata: new Category(
+      'Microdata',
+      'microResults',
+      page,
+      [tests['microData']]
+    ),  
+     schema: new Category(
+      'Schema',
+      'schemaResults',
+      page,
+      [tests['schema']]
+    ),  
+     whois: new Category(
       'Domain Registration Information',
       'whoisResults',
       page,
       [tests['whois']]
     ),
-    speed: new Category(
+     speed: new Category(
       'Speed Tests',
       'speedResults',
       page,
       [tests['speed']]
     ),
-    social: new Category(
+     social: new Category(
       'Social Media',
       'socialResults',
       page,
-      [tests['socialMediaLikes'], tests['openGraph']]
+      [tests['socialMediaLikes']]
     ),
-    mobile: new Category(
+      opengraph: new Category(
+      'Open Graph',
+      'ogResults',
+      page,
+      [tests['openGraph']]
+    ),
+     mobile: new Category(
       'Mobile',
       'mobileResults',
       page,
       [tests['mobileFriendliness']]
-
-    ),
-    new: new Category(
-      'Domain Registration Information',
-      'newResults',
-      page,
-      [tests['whois']]
     )
-  }
+   }
 
   // Execute each test
   Object.keys(categories).forEach(function(k) {
