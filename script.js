@@ -83,13 +83,13 @@ class TestResult {
   }
 
   renderResult(targetDiv) {
-    if (this.resultType === UNNESTED) targetDiv.innerHTML = '<span class="title">'+ this.title + ':</span> ' + this.results
+    if (this.resultType === UNNESTED) targetDiv.innerHTML = this.title + ': ' + this.results
     else {
       // Nested results
-      targetDiv.innerHTML = '<span class="title">'+ this.title + ':</span>'
-      let subResults = document.createElement('span')
+      targetDiv.innerHTML = this.title + ':'
+      let subResults = document.createElement('ul')
       this.results.forEach(r => {
-        let res = document.createElement('span')
+        let res = document.createElement('li')
         r.renderResult(res)
         subResults.appendChild(res)
       })
@@ -126,11 +126,10 @@ class Category {
       // catTitle.classList.add('categoryTitle')
       // catTitle.textContent = this.title
       // cat.appendChild(catTitle)
-      let resList = document.createElement('span')
-      resList.classList.add('resultsList')
+      let resList = document.createElement('ul')
       cat.appendChild(resList)
       this.testResults.forEach(res => {
-        let resElement = document.createElement('span')
+        let resElement = document.createElement('li')
         resElement.classList.add('result')
         res.renderResult(resElement)
         resList.appendChild(resElement)
