@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T19:00:16-07:00
+ * @Last modified time: 2019-04-10T19:01:08-07:00
  */
 
 // Add microformat parser to page
@@ -45,7 +45,6 @@ function getUrlVars() {
 // If this page was linked to with a url, just start the test immediately.
 let urlParams = getUrlVars()
 if (urlParams['url'] !== undefined) {
-  document.getElementById('URLSearchBar').value = Base64.decode(urlParams['url'])
   startTest(Base64.decode(urlParams['url']))
 }
 
@@ -411,7 +410,7 @@ function keywords(sharedhtml) {
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     },
     siteMaps: (page, callbackObj) => {
-      url = encodeURI('http://' + getDomain(document.getElementById('URLSearchBar').value) + '/sitemaps.xml')
+      url = encodeURI('http://' + getDomain(Base64.decode(urlParams['url'])) + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
