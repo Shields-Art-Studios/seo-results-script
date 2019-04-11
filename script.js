@@ -500,7 +500,13 @@ function analyze(htmlString) {
       'General', // Title that renders on the page
       'generalResults', // CSS ID
       page, // Always type page just like this
-      [tests['headings'], tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
+      [tests['keywords'], tests['altTags'], tests['linksWithinDomainName'], tests['viewport'], tests['microData'], tests['schema'], tests['siteMaps']] // List the tests
+    ),
+    header: new Category(
+      'Domain Registration Information',
+      'headerResults',
+      page,
+      [tests['headings']]
     ),
     whois: new Category(
       'Domain Registration Information',
