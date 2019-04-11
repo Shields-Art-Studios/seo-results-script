@@ -126,10 +126,11 @@ class Category {
       // catTitle.classList.add('categoryTitle')
       // catTitle.textContent = this.title
       // cat.appendChild(catTitle)
-      let resList = document.createElement('ul')
+      let resList = document.createElement('span')
+      resList.classList.add('resultsList')
       cat.appendChild(resList)
       this.testResults.forEach(res => {
-        let resElement = document.createElement('li')
+        let resElement = document.createElement('span')
         resElement.classList.add('result')
         res.renderResult(resElement)
         resList.appendChild(resElement)
