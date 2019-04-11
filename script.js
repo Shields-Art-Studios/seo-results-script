@@ -525,6 +525,13 @@ function analyze(htmlString) {
       'mobileResults',
       page,
       [tests['mobileFriendliness']]
+      
+    ),
+    new: new Category(
+      'Domain Registration Information',
+      'newResults',
+      page,
+      [tests['whois']]
     )
   }
 
