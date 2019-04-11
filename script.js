@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T17:58:17-07:00
+ * @Last modified time: 2019-04-10T18:54:54-07:00
  */
 
 // Add microformat parser to page
@@ -430,6 +430,12 @@ function keywords(sharedhtml) {
     e.currentTarget.value = ''
   })
 
+  document.getElementById('URLSearchBar').addEventListener('keypress', (e) => {
+  var key = e.which || e.keyCode;
+  if (key === 13) { // 13 is enter
+    startTest(document.getElementById('URLSearchBar').value)
+  }
+})
 
 document.getElementById('sendResultsButton').addEventListener('click', (e) => {
   document.getElementById('resultsDiv').style.display = 'none'
@@ -531,7 +537,7 @@ function analyze(htmlString) {
       'mobileResults',
       page,
       [tests['mobileFriendliness']]
-      
+
     ),
     new: new Category(
       'Domain Registration Information',
