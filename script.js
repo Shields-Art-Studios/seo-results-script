@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T17:56:18-07:00
+ * @Last modified time: 2019-04-10T17:58:17-07:00
  */
 
 // Add microformat parser to page
@@ -439,8 +439,6 @@ document.getElementById('sendResultsButton').addEventListener('click', (e) => {
 function startTest(url) {
 
   document.getElementById('resultsDiv').style.display = 'none'
-
-  document.getElementById('emailResultsModal').style.display = 'block' // Show modal
 
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
