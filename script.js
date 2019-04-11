@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T19:16:43-07:00
+ * @Last modified time: 2019-04-10T19:19:04-07:00
  */
 
 // Add microformat parser to page
@@ -435,7 +435,7 @@ function keywords(sharedhtml) {
   document.getElementById('URLSearchBar').addEventListener('keypress', (e) => {
   var key = e.which || e.keyCode;
   if (key === 13) { // 13 is enter
-    window.location += '?url='+ Base64.encode(url)
+    window.location = 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
   }
 })
 
@@ -466,7 +466,7 @@ function startTest(url) {
           To: document.getElementById('emailEntry').value,
           From: 'gabriel@shieldsarts.com',
           Subject: 'Your SEO Report',
-          Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(url) + '">Your Results</a>'
+          Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
         })
 
         // Send an email to Gabriel
@@ -477,7 +477,7 @@ function startTest(url) {
           Subject: 'Your SEO Report',
           Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
           'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
-          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLSearchBar').value) + '">Your Results</a>'
+          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
         })
       }
     }
