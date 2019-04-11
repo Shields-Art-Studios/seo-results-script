@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T18:56:52-07:00
+ * @Last modified time: 2019-04-10T19:00:16-07:00
  */
 
 // Add microformat parser to page
@@ -45,7 +45,7 @@ function getUrlVars() {
 // If this page was linked to with a url, just start the test immediately.
 let urlParams = getUrlVars()
 if (urlParams['url'] !== undefined) {
-  document.getElementById('URLSearchBar').value = urlParams['url']
+  document.getElementById('URLSearchBar').value = Base64.decode(urlParams['url'])
   startTest(Base64.decode(urlParams['url']))
 }
 
