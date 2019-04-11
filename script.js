@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-10T19:05:06-07:00
+ * @Last modified time: 2019-04-10T19:16:43-07:00
  */
 
 // Add microformat parser to page
@@ -435,7 +435,7 @@ function keywords(sharedhtml) {
   document.getElementById('URLSearchBar').addEventListener('keypress', (e) => {
   var key = e.which || e.keyCode;
   if (key === 13) { // 13 is enter
-    startTest(document.getElementById('URLSearchBar').value)
+    window.location += '?url='+ Base64.encode(url)
   }
 })
 
