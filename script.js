@@ -4,7 +4,7 @@
  * @Email:  jackrwoods@gmail.com
  * @Filename: script.js
  * @Last modified by:   Jack Woods
- * @Last modified time: 2019-04-08T18:35:44-07:00
+ * @Last modified time: 2019-04-10T17:43:48-07:00
  */
 
 // Add microformat parser to page
@@ -264,7 +264,7 @@ function keywords(sharedhtml) {
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
       for (link of page.getElementsByTagName('a')) {
-        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLInput').value)) num++
+        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLSearchBar').value)) num++
       }
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
@@ -310,7 +310,7 @@ function keywords(sharedhtml) {
           ]))
         }
       }
-      http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('URLInput').value))
+      http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('URLSearchBar').value))
       http.send()
     },
     whois: (page, callbackObj) => {
@@ -334,7 +334,7 @@ function keywords(sharedhtml) {
              callbackObj.addResult(new TestResult('Whois Information', NESTED, results))
           }
       }
-      http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('URLInput').value), true)
+      http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(document.getElementById('URLSearchBar').value), true)
       http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'));
       http.send()
     },
@@ -350,7 +350,7 @@ function keywords(sharedhtml) {
           }
       }
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + getDomain(document.getElementById('URLInput').value), true))
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + getDomain(document.getElementById('URLSearchBar').value), true))
       http.send()
     },
     schema: (page, callbackObj) => {
@@ -408,7 +408,7 @@ function keywords(sharedhtml) {
       callbackObj.addResult(new TestResult('Website Microdata Check', NESTED, results))
     },
     siteMaps: (page, callbackObj) => {
-      url = encodeURI('http://' + getDomain(document.getElementById('URLInput').value) + '/sitemaps.xml')
+      url = encodeURI('http://' + getDomain(document.getElementById('URLSearchBar').value) + '/sitemaps.xml')
       let http = new XMLHttpRequest()
       http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
@@ -424,22 +424,12 @@ function keywords(sharedhtml) {
     }
   }
 
-  // Add http:// to URLInput input by default.
-  document.getElementById('URLInput').value = getCookie('url').length > 0 ? getCookie('url') : 'your-site.com'
-  document.getElementById('URLInput').addEventListener('focusin', (e) => {
+  // Add http:// to URLSearchBar input by default.
+  document.getElementById('URLSearchBar').value = getCookie('url').length > 0 ? getCookie('url') : 'your-site.com'
+  document.getElementById('URLSearchBar').addEventListener('focusin', (e) => {
     e.currentTarget.value = ''
   })
 
-  // Download the target web page and perform analysis
-  document.getElementById('testButton').addEventListener('click', function() {
-    startTest(document.getElementById('URLInput').value)
-  })
-  document.getElementById('URLInput').addEventListener('keypress', (e) => {
-    var key = e.which || e.keyCode;
-    if (key === 13) { // 13 is enter
-      startTest(document.getElementById('URLInput').value)
-    }
-  })
 
 document.getElementById('sendResultsButton').addEventListener('click', (e) => {
   document.getElementById('resultsDiv').style.display = 'none'
@@ -479,7 +469,7 @@ function startTest(url) {
           Subject: 'Your SEO Report',
           Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
           'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
-          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLInput').value) + '">Your Results</a>'
+          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + window.location + '?url='+ Base64.encode(document.getElementById('URLSearchBar').value) + '">Your Results</a>'
         })
       }
     }
@@ -498,7 +488,7 @@ function startTest(url) {
 }
 
 function analyze(htmlString) {
-  setCookie('url', document.getElementById('URLInput').value)
+  setCookie('url', document.getElementById('URLSearchBar').value)
   // Parse htmlString into a DOM element
   let page = document.createElement('div')
   page.innerHTML = htmlString
