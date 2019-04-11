@@ -83,13 +83,13 @@ class TestResult {
   }
 
   renderResult(targetDiv) {
-    if (this.resultType === UNNESTED) targetDiv.innerHTML = this.title + ': ' + this.results
+    if (this.resultType === UNNESTED) targetDiv.innerHTML = '<span class="title">'+ this.title + ':</span> ' + this.results
     else {
       // Nested results
-      targetDiv.innerHTML = this.title + ':'
-      let subResults = document.createElement('ul')
+      targetDiv.innerHTML = '<span class="title">'+ this.title + ':</span>'
+      let subResults = document.createElement('span')
       this.results.forEach(r => {
-        let res = document.createElement('li')
+        let res = document.createElement('span')
         r.renderResult(res)
         subResults.appendChild(res)
       })
