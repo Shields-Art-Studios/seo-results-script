@@ -266,7 +266,7 @@ function keywords(sharedhtml) {
     linksWithinDomainName: (page, callbackObj) => {
       let num = 0
       for (link of page.getElementsByTagName('a')) {
-        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(document.getElementById('URLSearchBar').value)) num++
+        if (link.getAttribute('href') !== null && link.getAttribute('href').includes(getDomain(Base64.decode(urlParams['url'])))) num++
       }
       callbackObj.addResult(new TestResult('Number of Links Within Domain Name', UNNESTED, num))
     },
