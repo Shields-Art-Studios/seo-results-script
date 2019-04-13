@@ -352,7 +352,7 @@ function keywords(sharedhtml) {
           }
       }
 
-      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + getDomain(Base64.decode(urlParams['url']))), true))
+      http.open('GET', 'https://api.sharedcount.com/v1.0/?apikey=3c8167d72e397f72a16159a2b22f372be1a2560a&url='+encodeURI('http://' + getDomain(Base64.decode(urlParams['url'])), true))
       http.send()
     },
     schema: (page, callbackObj) => {
