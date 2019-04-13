@@ -447,6 +447,7 @@ document.getElementById('sendResultsButton').addEventListener('click', (e) => {
 function startTest(url) {
 
   document.getElementById('resultsDiv').style.display = 'none'
+  document.getElementById('domainName').value = url
 
   // Open modal
   document.getElementById('displayResultsButton').style.display = 'none' // Hide show results button
