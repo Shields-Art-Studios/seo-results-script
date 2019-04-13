@@ -312,7 +312,7 @@ function keywords(sharedhtml) {
           ]))
         }
       }
-      http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(Base64.decode(urlParams['url']))))
+      http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(Base64.decode(urlParams['url'])))
       http.send()
     },
     whois: (page, callbackObj) => {
