@@ -336,8 +336,8 @@ function keywords(sharedhtml) {
              callbackObj.addResult(new TestResult('Whois Information', NESTED, results))
           }
       }
-      http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(Base64.decode(urlParams['url']))), true)
-      http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'));
+      http.open('GET', 'https://jsonwhoisapi.com/api/v1/whois?identifier='+encodeURI(Base64.decode(urlParams['url'])), true)
+      http.setRequestHeader("Authorization", "Basic " + btoa( '913132336:9TKGCGmqgnCpm2YadbdogQ'))
       http.send()
     },
     socialMediaLikes: (page, callbackObj) => {
