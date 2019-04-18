@@ -432,6 +432,10 @@ function keywords(sharedhtml) {
     e.currentTarget.value = ''
   })
 
+  document.getElementById('linkToResults').addEventListener('click', (e) => {
+    window.location = 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
+  })
+
   document.getElementById('URLSearchBar').addEventListener('keypress', (e) => {
   var key = e.which || e.keyCode;
   if (key === 13) { // 13 is enter
