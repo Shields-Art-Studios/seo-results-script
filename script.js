@@ -545,12 +545,7 @@ function analyze(htmlString) {
       page,
       [tests['viewport']]
     ),    
-     microdata: new Category(
-      'Microdata',
-      'microResults',
-      page,
-      [tests['microData']]
-    ),  
+   
      schema: new Category(
       'Schema',
       'schemaResults',
