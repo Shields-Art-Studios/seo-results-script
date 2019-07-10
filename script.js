@@ -312,7 +312,7 @@ function keywords(sharedhtml) {
           ]))
         }
       }
-      http.open('GET', 'https://shieldsarts.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(Base64.decode(urlParams['url'])))
+      http.open('GET', 'https://risenrank.com/seo-system/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(Base64.decode(urlParams['url'])))
       http.send()
     },
     whois: (page, callbackObj) => {
@@ -421,7 +421,7 @@ function keywords(sharedhtml) {
           }
         }
       }
-      http.open('GET', 'https://shieldsarts.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+      http.open('GET', 'https://risenrank.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
       http.send()
     }
   }
@@ -433,13 +433,13 @@ function keywords(sharedhtml) {
   })
 
   document.getElementById('linkToResults').addEventListener('click', (e) => {
-    window.location = 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
+    window.location = 'https://risenrank.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
   })
 
   document.getElementById('URLSearchBar').addEventListener('keypress', (e) => {
   var key = e.which || e.keyCode;
   if (key === 13) { // 13 is enter
-    window.location = 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
+    window.location = 'https://risenrank.com/seo-report/?url='+ Base64.encode(document.getElementById('URLSearchBar').value)
   }
 })
 
@@ -469,16 +469,16 @@ function startTest(url) {
         Email.send({
           SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
           To: document.getElementById('emailEntry').value,
-          From: 'gabriel@shieldsarts.com',
+          From: 'gabriel@benucreative.com',
           Subject: 'Your SEO Report',
-          Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
+          Body: 'Hello ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://risenrank.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
         })
 
         // Send an email to Gabriel
         Email.send({
           SecureToken: '6604c96e-6b28-4de7-85ab-93c67fb6d351',
-          To: 'gabriel@shieldsarts.com',
-          From: 'gabriel@shieldsarts.com',
+          To: 'gabriel@benucreative.com',
+          From: 'gabriel@benucreative.com',
           Subject: 'Your SEO Report',
           Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
           'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
@@ -496,7 +496,7 @@ function startTest(url) {
       analyze(http.responseText)
     }
   }
-  http.open('GET', 'https://shieldsarts.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
+  http.open('GET', 'https://risenrank.com/dev-scripts/seo-report-scripts/getRequestGenerator.php?url=' + Base64.encode(url), true)
   http.send()
 }
 
