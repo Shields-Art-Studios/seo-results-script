@@ -482,7 +482,7 @@ function startTest(url) {
           Subject: 'Your SEO Report',
           Body: 'A user requested their SEO results!<br />Name: ' + document.getElementById('nameEntry').value + '<br />Email: ' + document.getElementById('emailEntry').value + '<br />Tel: ' + document.getElementById('telephoneEntry').value + '<br />' +
           'Email Me: ' + document.getElementById('emailToggle').checked + '<br />' +
-          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://shieldsarts.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
+          'Follow Up With Me: ' + document.getElementById('phoneToggle').checked + '<br />Message: ' + document.getElementById('nameEntry').value + ',<br /> Your results can be viewed here: <a href="' + 'https://risenrank.com/seo-report/?url='+ Base64.encode(url) + '">Your Results</a>'
         })
       }
     }
