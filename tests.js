@@ -96,7 +96,7 @@ export tests {
         })
       }
     }
-    http.open('GET', 'https://seo.shieldsarts.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
+    http.open('GET', 'https://risenrank.com/native_api/pagestatus_check?api_key=1-dH1exZv1550098336TKUFrIJ&domain='+encodeURI(document.getElementById('domainName').value))
     http.send()
   },
   whois: (page, callback) => {
@@ -241,6 +241,6 @@ document.getElementById('submit').addEventListener('click', function() {
   // Build the request URL and send it!
   // Execute JSONP request
   let s = document.createElement('script')
-  s.src = 'https://dev.shieldsarts.com/seo-report-scripts/getRequestGenerator.php?url='+Base64.encode(url)+'&callback=analyze'
+  s.src = 'https://risenrank.com/seo-report-scripts/getRequestGenerator.php?url='+Base64.encode(url)+'&callback=analyze'
   document.head.appendChild(s)
 })
