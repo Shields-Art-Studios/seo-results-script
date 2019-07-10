@@ -12,17 +12,17 @@
 $to = $_POST["email"];
 $subject = "SEO Report";
 $txt = $_POST["message"];
-$headers = array("From: gabriel@shieldsarts.com",
-    "Reply-To: gabriel@shieldsarts.com",
+$headers = array("From: gabriel@benucreative.com",
+    "Reply-To: gabriel@benucreative.com",
     "X-Mailer: PHP/" . PHP_VERSION
 );
 mail($to,$subject,$txt,$headers);
 
-$to2 = "gabriel@shieldsarts.com";
+$to2 = "gabriel@benucreative.com";
 $subject2 = "New Lead - SEO Report";
 $txt2 = $_POST["message2"].$_POST["message"];
-$headers2 = array("From: gabriel@shieldsarts.com",
-    "Reply-To: gabriel@shieldsarts.com",
+$headers2 = array("From: gabriel@benucreative.com",
+    "Reply-To: gabriel@benucreative.com",
     "X-Mailer: PHP/" . PHP_VERSION
 );
 
